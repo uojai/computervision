@@ -5055,7 +5055,7 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
 }
 
 .button.button--add:hover {
-    background-color: #4d9221
+    background-color: #70b8e5
 }
 
 .button.button--add[disabled],.button.button--add[disabled]:hover {
@@ -5066,9 +5066,9 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
 
 .button.button--ghost {
     background-color: transparent;
-    border: 1px solid rgba(77,146,33,0.5) ;
+    border: 1px solid #dbdde0;
     border-radius: 4px;
-    color: #4d9221;
+    color: #eb7837;
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
@@ -5077,8 +5077,21 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
     transition-property: background-color
 }
 
+/*.button.button--ghost {*/
+/*    background-color: transparent;*/
+/*    border: 1px solid #0078d4;*/
+/*    border-radius: 4px;*/
+/*    color: #0062ad;*/
+/*    display: inline-block;*/
+/*    font-size: 14px;*/
+/*    font-weight: 600;*/
+/*    padding: 10px 16px;*/
+/*    width: 100%;*/
+/*    transition-property: background-color;*/
+/*}*/
+
 .button.button--ghost:hover {
-    background-color: #4d9221;
+    background-color: #eb7837;
     color: #fff
 }
 
@@ -5087,10 +5100,10 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
 }
 
 .button.button--ghost:focus {
-    background-color: #4d9221;
+    background-color: #eb7837;
     color: #fff;
-    outline: 1px solid #fff;
-    outline-offset: -4px
+    outline: 1px solid rgba(255,255,255,0.3);
+    outline-offset: -5px;
 }
 
 .button.button--ghost:hover,.button.button--ghost:focus {
@@ -5098,7 +5111,7 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
 }
 
 .button.button--ghost svg {
-    fill: #4d9221
+    fill: #eb7837
 }
 
 .button.button--ghost[disabled],.button.button--ghost[disabled]:focus,.button.button--ghost[disabled]:hover {
