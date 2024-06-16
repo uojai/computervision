@@ -1,0 +1,41 @@
+.azure-footer-nav {
+    background-color: #f4f5f6;
+    color: #1a1a1f;
+    padding: 48px 0 36px;
+    font-size: 12px;
+    font-family: 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+.azure-footer-nav__pre-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.azure-footer-nav .azure-footer-row {
+    max-width: 1310px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.azure-footer-nav.acom-nav-service .azure-footer-row {
+    max-width: 1600px;
+}
+
+.azure-footer-nav .azure-footer-row {
+    max-width: 1310px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.azure-footer-nav .azure-footer-row+.azure-footer-row {
+    margin-top: 36px;
+}
+
+.azure-footer-nav.acom-nav-service .azure-footer-row {
+    max-width: 1600px;
+}
