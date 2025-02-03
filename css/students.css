@@ -1,0 +1,327 @@
+@charset "UTF-8";
+
+table td, table th {
+     padding: 5px;
+}
+
+/*table {*/
+/*    border-color: red;*/
+/*}*/
+/*table tr {*/
+/*    !*display: block;*!*/
+/*    !*height: 6px;*!*/
+/*    !* width: 100%;*!*/
+/*    !*padding: 0rem;*!*/
+/*    !*border-width: 0;*!*/
+/*    !*border-bottom-width: 2px;*!*/
+/*    !*border-top-width: 2px;*!*/
+/*    !*border-style: solid;*!*/
+/*    !*border-color: #ffffff;*!*/
+/*    !*background-color: #fdd17a !important*!*/
+/*}*/
+
+/*table tr {*/
+/*    border-bottom: 1px solid #ffffff;*/
+/*    !*border-top: none;*!*/
+/*    !*1px solid #ffffff;*!*/
+/*}*/
+
+.project-wrap {
+    width: 100%;
+
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    /*padding-top: 5px;*/
+    font-weight: bold;
+    color: #ffffff;
+    width: 100px;
+    height: 100px;
+    border-radius: 50% 50% 50% 50%;
+}
+.project-icon {
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+table tr:last-child {
+    border-bottom: 1px solid #ffffff;
+}
+
+.marks-page {
+    width: 100%!important;
+    min-width: 1024px;
+}
+
+
+.lab-group-page {
+    width: 100%!important;
+    min-width: 1064px;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*min-height: 100vh;*/
+}
+
+.circle {
+    position: relative;
+    background: #f3c977;
+    border-radius: 100%;
+    /*border-color: #ffffff;*/
+    border: 2px solid #ffffff;
+    height: 2.0rem;
+    width: 2.0rem;
+    /*padding-top: 2px;*/
+    line-height:1.7rem;
+}
+
+.checkMark {
+    position: absolute;
+    transform: rotate(50deg) translate(-50%, -50%);
+    left: 26%;
+    top: 48%;
+    height: 12px;
+    width: 7px;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+}
+
+.background-inherit {
+    background-color: inherit;
+}
+
+.background-yellow {
+    background-color: #efedcc;
+}
+
+.background-white {
+    background-color: #ffffff;
+}
+
+.number-column {
+    width: 60px !important;
+    border: 1px solid red;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+}
+.name-column {
+    width: 300px !important;
+    /*border: 1px solid red;*/
+    vertical-align: middle;
+    min-width: 410px;
+}
+
+.assignment-title {
+    /*transform: rotate(90deg);*/
+    /*height: 120px;*/
+    /*vertical-align: middle;*/
+
+}
+
+
+.attendance-column {
+    width: 60px !important;
+    min-width: 60px !important;
+    /*border: 1px solid red;*/
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /*display: flex*/
+}
+
+.student {
+    width:160px;
+    height: 160px;
+    background-color: #FFFFFF;
+    /*display: flex;*/
+    box-shadow: 6px 20px 20px 0px rgba(23.000000000000092, 4.299999999999997, 77, 0.1);
+    border-radius: 6px 6px 6px 6px;
+    /*border-radius: 50% 50% 50% 50%;*/
+    background-transition: 0.3s;
+    /*margin: 30px !important;*/
+    margin-left: 0px !important;
+    margin-right: 35px !important;
+    margin-bottom: 35px !important;
+
+    /*display: inline-block;*/
+    /*padding: 15px;*/
+    /*border: 1px solid white;*/
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    float: left;
+    cursor: pointer;
+
+}
+
+.student:hover {
+    /*color: #fff;*/
+    background: #ffffff;
+    /*border-color: #e6f5d0;*/
+    /*border: 1px solid #e6f5d0;*/
+    /*border: 1px solid #ffffff;*/
+
+    box-shadow: 0px 10px 10px 0px rgba(190, 208, 161, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+
+.student-cs:hover {
+    color: #fff !important;
+    background: #08519c !important;
+    box-shadow: 0px 10px 10px 0px rgba(8, 81, 156, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+
+.student-it:hover {
+    /*color: #fff !important;*/
+    background: #ffffff;
+    /*background: #67000d !important;*/
+    box-shadow: 0px 10px 10px 0px rgba(103, 0, 13, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+
+.student-level-a:hover {
+    box-shadow: 0px 10px 10px 0px rgba(35, 132, 67, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+.student-level-b:hover {
+    box-shadow: 0px 10px 10px 0px rgba(120, 198, 121, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+.student-level-c:hover {
+    box-shadow: 0px 10px 10px 0px rgba(194, 230, 153, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+.student-level-d:hover {
+    box-shadow: 0px 10px 10px 0px rgba(254, 232, 200, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+.student-level-e:hover {
+    box-shadow: 0px 10px 10px 0px rgba(253, 141, 60, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+.student-level-f:hover {
+    box-shadow: 0px 10px 10px 0px rgba(227, 26, 28, 0.25);
+    transition: background 0.6s, border 0.7s, border-radius 0.7s, box-shadow 0.7s;
+}
+
+.student-marks {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5px;
+    font-weight: bold;
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50% 50% 50% 50%;
+    /*background-color: #e6f5d0;*/
+}
+
+
+.a,
+.thumbnail-level-a {
+    /*background: #4d9221 !important;*/
+    background: rgba(77, 146, 33, 0.6) !important;
+}
+
+.b,
+.thumbnail-level-b {
+    /*background: #a1d76a !important;*/
+    background: rgba(161, 215, 106, 0.6) !important;
+
+}
+
+.c,
+.thumbnail-level-c {
+    /*background: #e6f5d0 !important;*/
+    background: rgba(230, 245, 208, 0.6) !important;
+
+}
+
+.d,
+.thumbnail-level-d {
+    /*background: #fee090 !important;*/
+    background: rgba(254, 224, 144, 0.6) !important;
+}
+
+.e,
+.thumbnail-level-e {
+    /*background: #fc8d59 !important;*/
+    background: rgba(252, 141, 89, 0.6) !important;
+}
+
+.f,
+.thumbnail-level-f {
+    /*background: #d73027 !important;*/
+    background: rgba(215, 48, 39, 0.6) !important;
+}
+
+.grade{
+    float: left;
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 50% !important;
+    box-shadow: 3px 5px 5px 0px rgba(23.000000000000092, 4.299999999999997, 77, 0.1);
+}
+
+.grade-description {
+    float: left;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 20px;
+    font-size: 12px;
+}
+
+.department {
+    font-size: 10px;
+    font-style: italic;
+    text-align: center;
+    /*border: 1px solid red;*/
+    /*height: 40px;*/
+}
+
+.student-name {
+    /*margin-top: 30px;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*text-align: center;*/
+    /*font-size: 12px;*/
+
+    font-size: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.student-thumbnail {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50% 50% 50% 50%;
+    /*background-color: #e6f5d0;*/
+
+}
+
+.thumbnail-cs {
+    background: #08519c !important;
+}
+
+.thumbnail-it {
+    background: #9c0826 !important;
+}
+
+.student-thumbnail img {
+        height: auto;
+        max-width: 100%;
+}

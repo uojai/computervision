@@ -2838,7 +2838,7 @@ svg * {
 
 img,video {
     height: auto;
-    max-width: 100%
+    /*max-width: 100%*/
 }
 
 iframe {
@@ -4297,7 +4297,7 @@ a {
 }
 
 a:hover {
-    text-decoration: underline
+    text-decoration: none
 }
 
 p {
@@ -5066,9 +5066,9 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
 
 .button.button--ghost {
     background-color: transparent;
-    border: 1px solid #dbdde0;
+    /*border: 1px solid #dbdde0;*/
     border-radius: 4px;
-    color: #eb7837;
+    color: rgba(0,0,0,1);
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
@@ -5091,8 +5091,8 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
 /*}*/
 
 .button.button--ghost:hover {
-    background-color: #eb7837;
-    color: #fff
+    background-color: #fdd17a;
+    color: #000
 }
 
 .button.button--ghost:hover svg {
@@ -5100,8 +5100,8 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
 }
 
 .button.button--ghost:focus {
-    background-color: #eb7837;
-    color: #fff;
+    background-color: #fdd17a;
+    color: #000;
     outline: 1px solid rgba(255,255,255,0.3);
     outline-offset: -5px;
 }
@@ -5111,7 +5111,7 @@ button[disabled],[type=submit][disabled],[type=button][disabled],button[disabled
 }
 
 .button.button--ghost svg {
-    fill: #eb7837
+    fill: #53a1f2
 }
 
 .button.button--ghost[disabled],.button.button--ghost[disabled]:focus,.button.button--ghost[disabled]:hover {

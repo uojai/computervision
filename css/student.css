@@ -60,18 +60,6 @@
     font-display:auto;
 }
 
-table tr:last-child {
-    border-bottom:none;
-}
-
-.lab-legend {
-    height: 30px;
-}
-
-.extra-small,extra-small {
-    font-size: .65rem;
-    font-weight: inherit
-}
 
 
 .cool-title {
@@ -85,19 +73,6 @@ table tr:last-child {
     /*margin: 1em 0;*/
     /*font-size: 24px;*/
     font-size: 1.5em;
-}
-
-.cool-title-small {
-    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
-    /*text-align: center;*/
-    /*font-family: jeff-script;*/
-    font-weight: 300;
-    font-style: normal;
-    /*line-height: 1.4em;*/
-    letter-spacing: .02em;
-    /*margin: 1em 0;*/
-    /*font-size: 24px;*/
-    font-size: 1.0em;
 }
 
 #main-content h1 {
@@ -18862,7 +18837,6 @@ html[dir=rtl] .text-right {
 }
 
 
-
 .rounded-t {
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
@@ -18990,16 +18964,6 @@ html[dir=rtl] .text-right {
     margin-right: auto;
 }
 
-
-.course-info-table {
-    border: none;
-    background: inherit;
-}
-
-.course-info-textbook {
-    width: 120px;
-}
-
 .textbook-card {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -19020,7 +18984,7 @@ html[dir=rtl] .text-right {
     transition: box-shadow .2s linear,opacity .2s linear,-webkit-box-shadow .2s linear;
     /*margin: 10px;*/
     /*width: 310px;*/
-    width: 180px;
+    width: 185px;
 
 }
 
@@ -19260,8 +19224,8 @@ html[dir=rtl] .text-right {
     border-radius: 9999px;
     justify-content: center;
     align-items: center;
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 1.5rem;
+    height: 1.5rem;
     display: flex;
     font-weight: 700;
     font-size: 12.0px;
@@ -19321,10 +19285,8 @@ html[dir=rtl] .text-right {
     color: #ffffff;
     background-color: #2184F9;
     box-shadow: 0px 10px 10px 0px rgba(0, 130.00000000000017, 222, 0.25);
-    /*padding: 13px 50px 13px 50px;*/
-    padding: 10px 30px 10px 20px;
+    padding: 13px 50px 13px 50px;
     border-radius: 50px 50px 50px 50px;
-    min-width: 120px;
     width: auto;
     display: inline-block;
     line-height: 1;
@@ -19363,8 +19325,8 @@ html[dir=rtl] .text-right {
     border-radius: 9999px;
     justify-content: center;
     align-items: center;
-    width: 2.0rem;
-    height: 2.0rem;
+    width: 1.8rem;
+    height: 1.8rem;
     display: flex;
     font-weight: 500;
     font-size: 12.0px;

@@ -1,0 +1,159 @@
+div {
+    background: transparent;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+.gesture {
+
+    /*height: 100%;*/
+    /*width: 100%;*/
+    width: 160px;
+    height: 200px;
+
+    /*border: 1px solid red;*/
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    transition: box-shadow .3s, transform .3s ease-out;
+
+}
+
+.gesture:hover {
+    /*box-shadow: rgba(0, 0, 0, 0.04) 0px 9px 21px 7px;*/
+
+    /*box-shadow: 2px 4px 10px 6px rgba(0, 0, 0, 0.04);*/
+    transform: translate3d(0, -10px, 0);
+}
+
+
+.photo {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    object-position: 50% 50%;
+    /*border-style: none;*/
+    text-align: center;
+
+
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 0px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 9px 21px 7px;
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: box-shadow .3s, transform .3s ease-out;
+
+}
+
+.photo:hover {
+    box-shadow: rgba(255, 209, 122, 0.9) 0px 0px 21px 5px;
+    border-width: 1px;
+
+    /*box-shadow: rgba(0, 0, 0, 0.04) 0px 9px 21px 7px;*/
+
+    /*box-shadow: 2px 4px 10px 6px rgba(0, 0, 0, 0.04);*/
+    /*transform: translate3d(0, -10px, 0);*/
+}
+
+.name {
+    position: relative;
+    bottom: -15px;
+    /*right: 0px;*/
+
+    color: black;
+    font-size: 10px;
+    text-align: center;
+    /*font-weight: bold;*/
+    background-color: rgba(255,255,255,0.25);
+    height: 15px;
+    /*padding-top: 3px;*/
+}
+
+.namea {
+    z-index: 100;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    /*left: 50%;*/
+    /*top: 0%;*/
+    /*transform: translate(-50%, 0%);*/
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
+    /*transform: translateY(-30px);*/
+    /*transform: translateX(150%);*/
+    /*bottom: 8px;*/
+    /*left: auto;*/
+    /*right: auto;*/
+    /*right: 16px;*/
+    /*left: 16px;*/
+    /*text-align: center;*/
+    background-color: #000000;
+    color: #ffffff;
+}
+
+
+.projecta {
+    width: 200px;
+    height: 200px;
+    /*background-color: rgba(255,255,255,0.5);*/
+    /*border-radius: 5% 5% 5% 5%;*/
+    /*border: 1px solid red;*/
+
+    background-color: #FFFFFF;
+    box-shadow: 0 0 20px #d7e3fa;
+    border-radius: 8px;
+    /*padding: 50px 0;*/
+    /*margin-bottom: 40px;*/
+}
+
+.department {
+    font-size: 10px;
+    font-style: italic;
+    text-align: center;
+    /*border: 1px solid red;*/
+    /*height: 40px;*/
+}
+
+.student-name {
+    /*margin-top: 30px;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*text-align: center;*/
+    /*font-size: 12px;*/
+
+    color: black;
+    font-size: 10px;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgba(255,255,255,0.5);
+}
+
+
+.project-wrap {
+    width: 100%;
+
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    /*padding-top: 5px;*/
+    font-weight: bold;
+    color: #ffffff;
+    width: 100px;
+    height: 100px;
+    border-radius: 5% 5% 5% 5%;
+    border: 1px solid red;
+}
+.project-icon {
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(0,0,0,0.15);
+}
