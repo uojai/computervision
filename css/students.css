@@ -119,6 +119,13 @@ table tr:last-child {
     min-width: 410px;
 }
 
+.project-column {
+    width: 100px !important;
+    /*border: 1px solid red;*/
+    vertical-align: middle;
+    min-width: 260px;
+    text-align: left;
+}
 .assignment-title {
     /*transform: rotate(90deg);*/
     /*height: 120px;*/
