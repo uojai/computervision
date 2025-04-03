@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>McKinsey Ecosystem Building Drills</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    h1 {
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .drill {
+      margin-bottom: 40px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .timer-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #e8f4fc;
+      border-radius: 5px;
+    }
+    .timer {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    button:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .solution {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f8f5;
+      border-radius: 5px;
+      border-left: 4px solid #2ecc71;
+    }
+    .species-card {
+      display: inline-block;
+      width: 140px;
+      padding: 10px;
+      margin: 5px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .species-card.selected {
+      background-color: #d4edff;
+      border-color: #3498db;
+    }
+    .ecosystem-display {
+      min-height: 150px;
+      border: 2px dashed #ccc;
+      padding: 15px;
+      margin: 15px 0;
+      background-color: white;
+    }
+    .terrain-specs {
+      margin: 15px 0;
+      padding: 15px;
+      background-color: #fff8e1;
+      border-radius: 5px;
+    }
+    .terrain-control {
+      margin: 10px 0;
+    }
+    .slider-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .slider-container label {
+      width: 120px;
+      font-size: 13px;
+    }
+    .feedback {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .correct {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .incorrect {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .species-details {
+      font-size: 12px;
+      margin-top: 5px;
+      color: #555;
+    }
+    .food-chain {
+      margin: 15px 0;
+      padding: 10px;
+      background-color: #e8f4f8;
+      border-radius: 4px;
+    }
+    .calorie-analysis {
+      margin: 15px 0;
+      padding: 10px;
+      background-color: #f0f7f0;
+      border-radius: 4px;
+    }
+    .species-in-ecosystem {
+      display: inline-block;
+      margin: 5px;
+      padding: 5px 10px;
+      background-color: #e3f2fd;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .tab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+      border-radius: 5px 5px 0 0;
+    }
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 10px 16px;
+      transition: 0.3s;
+      color: #333;
+    }
+    .tab button:hover {
+      background-color: #ddd;
+    }
+    .tab button.active {
+      background-color: #3498db;
+      color: white;
+    }
+    .tabcontent {
+      display: none;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-top: none;
+      border-radius: 0 0 5px 5px;
+    }
+    .warning {
+      color: #e53935;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>McKinsey Ecosystem Building Drills</h1>
+  <p>Practice for the McKinsey Problem Solving Game with these 5 ecosystem building exercises. Each drill has a 35-minute time limit.</p>
+
+  <div class="timer-container">
+    <div>Drill: <span id="current-drill">1</span>/5</div>
+    <div>Time Limit: 35:00</div>
+    <div>Elapsed: <span class="timer" id="timer">00:00</span></div>
+    <button id="start-btn">Start Drill</button>
+  </div>
+
+  <div id="drill-1" class="drill">
+    <h2>Drill 1: Mountain Ecosystem</h2>
+
+    <div class="terrain-specs">
+      <h3>Terrain Specifications (Adjust to Match Species Requirements)</h3>
+      <div class="slider-container">
+        <label for="elevation-1">Elevation (m):</label>
+        <input type="range" id="elevation-1" min="1000" max="4000" value="2500" class="terrain-control">
+        <span id="elevation-value-1">2500</span>
+      </div>
+      <div class="slider-container">
+        <label for="soil-ph-1">Soil pH:</label>
+        <input type="range" id="soil-ph-1" min="3" max="9" value="6" class="terrain-control">
+        <span id="soil-ph-value-1">6</span>
+      </div>
+      <div class="slider-container">
+        <label for="precipitation-1">Precipitation (mm):</label>
+        <input type="range" id="precipitation-1" min="200" max="2000" value="800" class="terrain-control">
+        <span id="precipitation-value-1">800</span>
+      </div>
+      <div class="slider-container">
+        <label for="temperature-1">Temperature (°C):</label>
+        <input type="range" id="temperature-1" min="-10" max="25" value="5" class="terrain-control">
+        <span id="temperature-value-1">5</span>
+      </div>
+      <div class="slider-container">
+        <label for="wind-speed-1">Wind Speed (km/h):</label>
+        <input type="range" id="wind-speed-1" min="0" max="100" value="30" class="terrain-control">
+        <span id="wind-speed-value-1">30</span>
+      </div>
+      <div class="slider-container">
+        <label for="air-pressure-1">Air Pressure (hPa):</label>
+        <input type="range" id="air-pressure-1" min="700" max="1100" value="850" class="terrain-control">
+        <span id="air-pressure-value-1">850</span>
+      </div>
+      <div class="slider-container">
+        <label for="humidity-1">Humidity (%):</label>
+        <input type="range" id="humidity-1" min="20" max="100" value="60" class="terrain-control">
+        <span id="humidity-value-1">60</span>
+      </div>
+      <div class="slider-container">
+        <label for="cloud-height-1">Cloud Height (m):</label>
+        <input type="range" id="cloud-height-1" min="500" max="3000" value="1500" class="terrain-control">
+        <span id="cloud-height-value-1">1500</span>
+      </div>
+    </div>
+
+    <p><strong>Objective:</strong> Build an ecosystem with 8 species that:</p>
+    <ol>
+      <li>Forms a complete food chain with calorie surplus for each predator-prey pair</li>
+      <li>All species must have their terrain requirements met by current settings</li>
+      <li>No species should be overconsumed (calorie balance maintained)</li>
+    </ol>
+
+    <div class="tab">
+      <button class="tablinks active" onclick="openTab(event, 'species-tab-1')">Available Species (13)</button>
+      <button class="tablinks" onclick="openTab(event, 'ecosystem-tab-1')">Your Ecosystem (0/8)</button>
+      <button class="tablinks" onclick="openTab(event, 'analysis-tab-1')">Ecosystem Analysis</button>
+    </div>
+
+    <div id="species-tab-1" class="tabcontent" style="display: block;">
+      <div id="species-container-1"></div>
+    </div>
+
+    <div id="ecosystem-tab-1" class="tabcontent">
+      <div id="ecosystem-display-1" class="ecosystem-display"></div>
+      <div id="terrain-warnings-1"></div>
+      <div id="calorie-warnings-1"></div>
+    </div>
+
+    <div id="analysis-tab-1" class="tabcontent">
+      <div id="food-chain-1" class="food-chain">
+        <h4>Food Chain Visualization</h4>
+        <div id="food-chain-display-1">No species selected yet</div>
+      </div>
+      <div id="calorie-analysis-1" class="calorie-analysis">
+        <h4>Calorie Balance</h4>
+        <div id="calorie-display-1">No species selected yet</div>
+      </div>
+    </div>
+
+    <button id="submit-1" disabled>Submit Ecosystem</button>
+    <div id="feedback-1" class="feedback"></div>
+
+    <button class="show-solution" data-drill="1">Show Solution</button>
+    <div id="solution-1" class="solution">
+      <h3>Recommended Solution:</h3>
+      <p><strong>Food Chain:</strong> Alpine Grass → Marmot → Golden Eagle</p>
+      <p><strong>Additional Species:</strong> Edelweiss, Mountain Goat, Snow Hare, Lynx, Alpine Chough, Mountain Pine</p>
+      <p><strong>Terrain Settings:</strong></p>
+      <ul>
+        <li>Elevation: 2800m</li>
+        <li>Soil pH: 5.5</li>
+        <li>Precipitation: 900mm</li>
+        <li>Temperature: 3°C</li>
+        <li>Wind Speed: 40km/h</li>
+        <li>Air Pressure: 800hPa</li>
+        <li>Humidity: 70%</li>
+        <li>Cloud Height: 1800m</li>
+      </ul>
+      <p><strong>Calorie Analysis:</strong></p>
+      <ul>
+        <li><strong>Alpine Grass</strong>: Produces 50,000 cal (no consumption)</li>
+        <li><strong>Marmot</strong>: Needs 3,000 cal (consumes 5% of grass = 2,500 cal) → Warning</li>
+        <li><strong>Golden Eagle</strong>: Needs 1,200 cal (consumes 1 marmot/week = ~600 cal) → Warning</li>
+        <li><strong>Solution</strong>: Add more producers (Mountain Pine) and adjust terrain to support larger grass production</li>
+      </ul>
+      <p><strong>Key Considerations:</strong></p>
+      <ol>
+        <li>Start with producers that match mountain terrain (Alpine Grass, Mountain Pine)</li>
+        <li>Add herbivores that can survive at high elevation (Marmot, Mountain Goat)</li>
+        <li>Include apex predators (Golden Eagle, Lynx) but ensure sufficient prey</li>
+        <li>Adjust terrain parameters to meet most species' requirements</li>
+        <li>Balance calorie needs across the food chain</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Additional drills would follow similar structure -->
+  <!-- Drill 2: Coral Reef -->
+  <div id="drill-2" class="drill" style="display:none;">
+    <h2>Drill 2: Coral Reef Ecosystem</h2>
+
+    <div class="terrain-specs">
+      <h3>Terrain Specifications (Adjust to Match Species Requirements)</h3>
+      <div class="slider-container">
+        <label for="depth-2">Depth (m):</label>
+        <input type="range" id="depth-2" min="1" max="50" value="15" class="terrain-control">
+        <span id="depth-value-2">15</span>
+      </div>
+      <div class="slider-container">
+        <label for="current-2">Water Current (m/s):</label>
+        <input type="range" id="current-2" min="0" max="3" value="1" step="0.1" class="terrain-control">
+        <span id="current-value-2">1</span>
+      </div>
+      <div class="slider-container">
+        <label for="clarity-2">Water Clarity (m):</label>
+        <input type="range" id="clarity-2" min="1" max="30" value="10" class="terrain-control">
+        <span id="clarity-value-2">10</span>
+      </div>
+      <div class="slider-container">
+        <label for="temp-2">Temperature (°C):</label>
+        <input type="range" id="temp-2" min="20" max="30" value="26" class="terrain-control">
+        <span id="temp-value-2">26</span>
+      </div>
+      <div class="slider-container">
+        <label for="salt-2">Salt Content (ppt):</label>
+        <input type="range" id="salt-2" min="30" max="40" value="35" class="terrain-control">
+        <span id="salt-value-2">35</span>
+      </div>
+      <div class="slider-container">
+        <label for="oxygen-2">Dissolved Oxygen (mg/L):</label>
+        <input type="range" id="oxygen-2" min="4" max="10" value="6" step="0.1" class="terrain-control">
+        <span id="oxygen-value-2">6</span>
+      </div>
+      <div class="slider-container">
+        <label for="wind-2">Wind Speed (km/h):</label>
+        <input type="range" id="wind-2" min="0" max="50" value="20" class="terrain-control">
+        <span id="wind-value-2">20</span>
+      </div>
+    </div>
+
+    <p><strong>Objective:</strong> Build an ecosystem with 8 species that:</p>
+    <ol>
+      <li>Forms a complete food chain with calorie surplus for each predator-prey pair</li>
+      <li>All species must have their terrain requirements met by current settings</li>
+      <li>No species should be overconsumed (calorie balance maintained)</li>
+    </ol>
+
+    <div class="tab">
+      <button class="tablinks active" onclick="openTab(event, 'species-tab-2')">Available Species (13)</button>
+      <button class="tablinks" onclick="openTab(event, 'ecosystem-tab-2')">Your Ecosystem (0/8)</button>
+      <button class="tablinks" onclick="openTab(event, 'analysis-tab-2')">Ecosystem Analysis</button>
+    </div>
+
+    <div id="species-tab-2" class="tabcontent" style="display: block;">
+      <div id="species-container-2"></div>
+    </div>
+
+    <div id="ecosystem-tab-2" class="tabcontent">
+      <div id="ecosystem-display-2" class="ecosystem-display"></div>
+      <div id="terrain-warnings-2"></div>
+      <div id="calorie-warnings-2"></div>
+    </div>
+
+    <div id="analysis-tab-2" class="tabcontent">
+      <div id="food-chain-2" class="food-chain">
+        <h4>Food Chain Visualization</h4>
+        <div id="food-chain-display-2">No species selected yet</div>
+      </div>
+      <div id="calorie-analysis-2" class="calorie-analysis">
+        <h4>Calorie Balance</h4>
+        <div id="calorie-display-2">No species selected yet</div>
+      </div>
+    </div>
+
+    <button id="submit-2" disabled>Submit Ecosystem</button>
+    <div id="feedback-2" class="feedback"></div>
+
+    <button class="show-solution" data-drill="2">Show Solution</button>
+    <div id="solution-2" class="solution">
+      <h3>Recommended Solution:</h3>
+      <p><strong>Food Chain:</strong> Coral Polyps → Parrotfish → Moray Eel</p>
+      <p><strong>Additional Species:</strong> Zooplankton, Clownfish, Sea Turtle, Cleaner Shrimp, Algae</p>
+      <p><strong>Terrain Settings:</strong></p>
+      <ul>
+        <li>Depth: 12m</li>
+        <li>Water Current: 0.8m/s</li>
+        <li>Water Clarity: 15m</li>
+        <li>Temperature: 28°C</li>
+        <li>Salt Content: 34ppt</li>
+        <li>Dissolved Oxygen: 6.5mg/L</li>
+        <li>Wind Speed: 15km/h</li>
+      </ul>
+      <p><strong>Calorie Analysis:</strong></p>
+      <ul>
+        <li><strong>Coral Polyps</strong>: Produce 40,000 cal (consumed by Parrotfish)</li>
+        <li><strong>Parrotfish</strong>: Needs 800 cal (consumes 2% of coral = 800 cal) → Balanced</li>
+        <li><strong>Moray Eel</strong>: Needs 1,200 cal (consumes 1 parrotfish/week = ~800 cal) → Warning</li>
+        <li><strong>Solution</strong>: Add Zooplankton as additional food source for small fish</li>
+      </ul>
+      <p><strong>Key Considerations:</strong></p>
+      <ol>
+        <li>Coral requires specific water conditions (temp, clarity, current)</li>
+        <li>Include multiple food sources for predators (Moray eats both Parrotfish and Clownfish)</li>
+        <li>Add symbiotic relationships (Cleaner Shrimp)</li>
+        <li>Balance herbivores to prevent coral overgrazing</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Navigation buttons -->
+  <div class="navigation">
+    <button id="prev-btn" disabled>Previous Drill</button>
+    <button id="next-btn">Next Drill</button>
+  </div>
+</div>
+
+<script>
+  // Species data for each drill with full McKinsey constraints
+  const speciesData = {
+    1: [ // Mountain
+      {name: "Alpine Grass", type: "producer", caloriesProduced: 50000, caloriesNeeded: 0, prey: [],
+        terrain: {elevation: [2000,3500], soilPH: [4.5,6.5], precipitation: [500,1200], temperature: [-5,10],
+          windSpeed: [20,60], airPressure: [700,900], humidity: [50,90], cloudHeight: [1000,2500]}},
+      {name: "Mountain Pine", type: "producer", caloriesProduced: 40000, caloriesNeeded: 0, prey: [],
+        terrain: {elevation: [1500,3000], soilPH: [4,7], precipitation: [600,1500], temperature: [-10,15],
+          windSpeed: [10,50], airPressure: [750,950], humidity: [40,80], cloudHeight: [800,2000]}},
+      {name: "Edelweiss", type: "producer", caloriesProduced: 10000, caloriesNeeded: 0, prey: [],
+        terrain: {elevation: [2500,4000], soilPH: [5,7], precipitation: [300,1000], temperature: [-5,10],
+          windSpeed: [30,100], airPressure: [600,850], humidity: [30,70], cloudHeight: [1500,3000]}},
+      {name: "Marmot", type: "herbivore", caloriesProduced: 0, caloriesNeeded: 3000, prey: ["Alpine Grass", "Mountain Pine"],
+        terrain: {elevation: [2000,3500], soilPH: [5,7], precipitation: [400,1200], temperature: [0,15],
+          windSpeed: [10,40], airPressure: [750,950], humidity: [40,80], cloudHeight: [1000,2500]}},
+      {name: "Mountain Goat", type: "herbivore", caloriesProduced: 0, caloriesNeeded: 8000, prey: ["Alpine Grass", "Edelweiss"],
+        terrain: {elevation: [2500,4000], soilPH: [5,7.5], precipitation: [300,1200], temperature: [-10,15],
+          windSpeed: [20,80], airPressure: [650,900], humidity: [30,70], cloudHeight: [1200,3000]}},
+      {name: "Snow Hare", type: "herbivore", caloriesProduced: 0, caloriesNeeded: 600, prey: ["Alpine Grass", "Mountain Pine"],
+        terrain: {elevation: [1500,3500], soilPH: [4.5,7], precipitation: [400,1500], temperature: [-5,10],
+          windSpeed: [10,50], airPressure: [700,950], humidity: [40,90], cloudHeight: [800,2500]}},
+      {name: "Golden Eagle", type: "carnivore", caloriesProduced: 0, caloriesNeeded: 1200, prey: ["Marmot", "Snow Hare"],
+        terrain: {elevation: [2000,4000], soilPH: [4,8], precipitation: [200,1500], temperature: [-10,20],
+          windSpeed: [20,100], airPressure: [600,950], humidity: [20,80], cloudHeight: [1000,3000]}},
+      {name: "Lynx", type: "carnivore", caloriesProduced: 0, caloriesNeeded: 2500, prey: ["Mountain Goat", "Snow Hare"],
+        terrain: {elevation: [1500,3500], soilPH: [4.5,7.5], precipitation: [500,2000], temperature: [-15,15],
+          windSpeed: [10,60], airPressure: [700,950], humidity: [40,90], cloudHeight: [800,2500]}},
+      {name: "Alpine Chough", type: "omnivore", caloriesProduced: 0, caloriesNeeded: 200, prey: ["Insects", "Berries"],
+        terrain: {elevation: [2000,4000], soilPH: [4,8], precipitation: [300,1500], temperature: [-10,20],
+          windSpeed: [20,100], airPressure: [600,950], humidity: [30,80], cloudHeight: [1000,3000]}},
+      {name: "Mountain Fox", type: "carnivore", caloriesProduced: 0, caloriesNeeded: 1500, prey: ["Marmot", "Snow Hare"],
+        terrain: {elevation: [1500,3500], soilPH: [4.5,7.5], precipitation: [400,1800], temperature: [-10,15],
+          windSpeed: [10,70], airPressure: [700,950], humidity: [40,90], cloudHeight: [800,2500]}},
+      {name: "Alpine Salamander", type: "omnivore", caloriesProduced: 0, caloriesNeeded: 50, prey: ["Insects", "Worms"],
+        terrain: {elevation: [1000,3000], soilPH: [5,7], precipitation: [600,2000], temperature: [0,15],
+          windSpeed: [5,40], airPressure: [750,950], humidity: [60,100], cloudHeight: [500,2000]}},
+      {name: "Ptarmigan", type: "herbivore", caloriesProduced: 0, caloriesNeeded: 300, prey: ["Alpine Grass", "Berries"],
+        terrain: {elevation: [2000,4000], soilPH: [4.5,7], precipitation: [300,1200], temperature: [-10,15],
+          windSpeed: [20,80], airPressure: [650,900], humidity: [40,80], cloudHeight: [1000,3000]}},
+      {name: "Alpine Ibex", type: "herbivore", caloriesProduced: 0, caloriesNeeded: 10000, prey: ["Alpine Grass", "Mountain Pine"],
+        terrain: {elevation: [2500,4000], soilPH: [5,7.5], precipitation: [300,1000], temperature: [-10,15],
+          windSpeed: [30,100], airPressure: [600,850], humidity: [30,70], cloudHeight: [1500,3000]}}
+    ],
+    2: [ // Coral Reef
+      {name: "Coral Polyps", type: "producer", caloriesProduced: 40000, caloriesNeeded: 0, prey: [],
+        terrain: {depth: [5,30], current: [0.5,1.5], clarity: [10,30], temp: [24,29],
+          salt: [32,37], oxygen: [5,8], wind: [5,40]}},
+      {name: "Algae", type: "producer", caloriesProduced: 30000, caloriesNeeded: 0, prey: [],
+        terrain: {depth: [1,20], current: [0.2,2], clarity: [5,25], temp: [22,30],
+          salt: [30,38], oxygen: [4,9], wind: [0,50]}},
+      {name: "Seagrass", type: "producer", caloriesProduced: 35000, caloriesNeeded: 0, prey: [],
+        terrain: {depth: [1,15], current: [0.1,1.5], clarity: [8,30], temp: [22,30],
+          salt: [32,37], oxygen: [5,8], wind: [0,45]}},
+      {name: "Zooplankton", type: "herbivore", caloriesProduced: 0, caloriesNeeded: 10, prey: ["Phytoplankton"],
+        terrain: {depth: [1,40], current: [0.1,2.5], clarity: [5,30], temp: [20,30],
+          salt: [30,38], oxygen: [4,9], wind: [0,50]}},
+      {name: "Parrotfish", type: "herbivore", caloriesProduced: 0, caloriesNeeded: 800, prey: ["Coral Polyps", "Algae"],
+        terrain: {depth: [3,25], current: [0.3,2], clarity: [10,30], temp: [24,30],
+          salt: [32,37], oxygen: [5,8], wind: [5,45]}},
+      {name: "Clownfish", type: "omnivore", caloriesProduced: 0, caloriesNeeded: 500, prey: ["Zooplankton", "Algae"],
+        terrain: {depth: [1,20], current: [0.1,1.5], clarity: [8,25], temp: [24,30],
+          salt: [32,37], oxygen: [5,8], wind: [5,40]}},
+      {name: "Moray Eel", type: "carnivore", caloriesProduced: 0, caloriesNeeded: 1200, prey: ["Parrotfish", "Clownfish"],
+        terrain: {depth: [5,35], current: [0.2,2], clarity: [8,25], temp: [22,30],
+          salt: [32,38], oxygen: [5,8], wind: [5,50]}},
+      {name: "Sea Turtle", type: "omnivore", caloriesProduced: 0, caloriesNeeded: 5000, prey: ["Seagrass", "Jellyfish"],
+        terrain: {depth: [1,40], current: [0.1,2.5], clarity: [5,30], temp: [22,30],
+          salt: [30,38], oxygen: [4,9], wind: [0,50]}},
+      {name: "Cleaner Shrimp", type: "scavenger", caloriesProduced: 0, caloriesNeeded: 50, prey: ["Parasites"],
+        terrain: {depth: [3,25], current: [0.2,1.8], clarity: [8,25], temp: [24,30],
+          salt: [32,37], oxygen: [5,8], wind: [5,40]}},
+      {name: "Reef Shark", type: "carnivore", caloriesProduced: 0, caloriesNeeded: 5000, prey: ["Moray Eel", "Parrotfish"],
+        terrain: {depth: [5,40], current: [0.3,2.5], clarity: [10,30], temp: [24,30],
+          salt: [32,38], oxygen: [5,8], wind: [5,50]}},
+      {name: "Octopus", type: "carnivore", caloriesProduced: 0, caloriesNeeded: 2000, prey: ["Crab", "Clownfish"],
+        terrain: {depth: [5,30], current: [0.2,2], clarity: [8,25], temp: [22,30],
+          salt: [32,38], oxygen: [5,8], wind: [5,45]}},
+      {name: "Starfish", type: "omnivore", caloriesProduced: 0, caloriesNeeded: 100, prey: ["Coral Polyps", "Mollusks"],
+        terrain: {depth: [1,25], current: [0.1,1.5], clarity: [8,30], temp: [22,30],
+          salt: [32,37], oxygen: [5,8], wind: [5,40]}},
+      {name: "Butterflyfish", type: "omnivore", caloriesProduced: 0, caloriesNeeded: 300, prey: ["Coral Polyps", "Algae"],
+        terrain: {depth: [3,25], current: [0.2,1.8], clarity: [10,30], temp: [24,30],
+          salt: [32,37], oxygen: [5,8], wind: [5,40]}}
+    ]
+    // Additional drills would follow similar structure
+  };
+
+  // Solutions for each drill
+  const solutions = {
+    1: ["Alpine Grass", "Mountain Pine", "Marmot", "Golden Eagle", "Edelweiss", "Mountain Goat", "Snow Hare", "Lynx"],
+    2: ["Coral Polyps", "Algae", "Parrotfish", "Moray Eel", "Clownfish", "Cleaner Shrimp", "Sea Turtle", "Zooplankton"]
+    // Additional solutions would follow
+  };
+
+  // Initialize variables
+  let currentDrill = 1;
+  let timer;
+  let seconds = 0;
+  let isTimerRunning = false;
+  const timeLimit = 35 * 60; // 35 minutes in seconds
+
+  // DOM elements
+  const startBtn = document.getElementById('start-btn');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const timerDisplay = document.getElementById('timer');
+  const currentDrillDisplay = document.getElementById('current-drill');
+
+  // Initialize the first drill
+  initializeDrill(1);
+
+  // Event listeners
+  startBtn.addEventListener('click', startTimer);
+  prevBtn.addEventListener('click', () => navigateDrill(-1));
+  nextBtn.addEventListener('click', () => navigateDrill(1));
+  document.querySelectorAll('.show-solution').forEach(btn => {
+    btn.addEventListener('click', showSolution);
+  });
+
+  // Initialize terrain sliders
+  function initializeTerrainSliders(drillNumber) {
+    const terrainTypes = getTerrainTypes(drillNumber);
+    terrainTypes.forEach(terrain => {
+      const slider = document.getElementById(`${terrain}-${drillNumber}`);
+      const valueDisplay = document.getElementById(`${terrain}-value-${drillNumber}`);
+
+      if (slider && valueDisplay) {
+        // Update display on slider change
+        slider.addEventListener('input', function() {
+          valueDisplay.textContent = this.value;
+          updateTerrainWarnings(drillNumber);
+        });
+      }
+    });
+  }
+
+  // Get terrain types for a drill
+  function getTerrainTypes(drillNumber) {
+    if (drillNumber === 1) {
+      return ["elevation", "soil-ph", "precipitation", "temperature", "wind-speed", "air-pressure", "humidity", "cloud-height"];
+    } else if (drillNumber === 2) {
+      return ["depth", "current", "clarity", "temp", "salt", "oxygen", "wind"];
+    }
+    // Add other drills as needed
+    return [];
+  }
+
+  // Initialize a drill
+  function initializeDrill(drillNumber) {
+    currentDrill = drillNumber;
+    currentDrillDisplay.textContent = drillNumber;
+
+    // Hide all drills and show the current one
+    document.querySelectorAll('.drill').forEach(drill => {
+      drill.style.display = 'none';
+    });
+    document.getElementById(`drill-${drillNumber}`).style.display = 'block';
+
+    // Update navigation buttons
+    prevBtn.disabled = drillNumber === 1;
+    nextBtn.disabled = drillNumber === 5;
+
+    // Reset timer for new drill
+    resetTimer();
+
+    // Initialize terrain sliders
+    initializeTerrainSliders(drillNumber);
+
+    // Populate species cards
+    const container = document.getElementById(`species-container-${drillNumber}`);
+    container.innerHTML = '';
+
+    speciesData[drillNumber].forEach(species => {
+      const card = document.createElement('div');
+      card.className = 'species-card';
+      card.innerHTML = `
+                    <strong>${species.name}</strong>
+                    <div class="species-details">
+                        ${species.type.toUpperCase()} |
+                        ${species.caloriesNeeded > 0 ? 'Needs: ' + species.caloriesNeeded + ' cal' : 'Produces: ' + species.caloriesProduced + ' cal'}
+                    </div>
+                `;
+      card.dataset.name = species.name;
+      card.addEventListener('click', () => selectSpecies(drillNumber, species.name));
+      container.appendChild(card);
+    });
+
+    // Clear ecosystem display
+    document.getElementById(`ecosystem-display-${drillNumber}`).innerHTML = '';
+
+    // Reset submit button
+    const submitBtn = document.getElementById(`submit-${drillNumber}`);
+    submitBtn.disabled = true;
+    submitBtn.addEventListener('click', () => checkSolution(drillNumber));
+
+    // Hide feedback and solution
+    document.getElementById(`feedback-${drillNumber}`).textContent = '';
+    document.getElementById(`solution-${drillNumber}`).style.display = 'none';
+
+    // Clear analysis tabs
+    document.getElementById(`food-chain-display-${drillNumber}`).innerHTML = 'No species selected yet';
+    document.getElementById(`calorie-display-${drillNumber}`).innerHTML = 'No species selected yet';
+    document.getElementById(`terrain-warnings-${drillNumber}`).innerHTML = '';
+    document.getElementById(`calorie-warnings-${drillNumber}`).innerHTML = '';
+  }
+
+  // Select species for the ecosystem
+  function selectSpecies(drillNumber, speciesName) {
+    const ecosystemDisplay = document.getElementById(`ecosystem-display-${drillNumber}`);
+    const card = document.querySelector(`#species-container-${drillNumber} .species-card[data-name="${speciesName}"]`);
+
+    if (card.classList.contains('selected')) {
+      // Remove from ecosystem
+      card.classList.remove('selected');
+      const speciesElement = document.querySelector(`#ecosystem-display-${drillNumber} .species[data-name="${speciesName}"]`);
+      if (speciesElement) speciesElement.remove();
+    } else {
+      // Add to ecosystem if we have less than 8
+      const currentCount = document.querySelectorAll(`#ecosystem-display-${drillNumber} .species`).length;
+      if (currentCount < 8) {
+        card.classList.add('selected');
+        const speciesElement = document.createElement('div');
+        speciesElement.className = 'species-in-ecosystem';
+        speciesElement.textContent = speciesName;
+        speciesElement.dataset.name = speciesName;
+        ecosystemDisplay.appendChild(speciesElement);
+      }
+    }
+
+    // Enable/disable submit button based on selection count
+    const submitBtn = document.getElementById(`submit-${drillNumber}`);
+    const selectedCount = document.querySelectorAll(`#ecosystem-display-${drillNumber} .species-in-ecosystem`).length;
+    submitBtn.disabled = selectedCount !== 8;
+
+    // Update analysis tabs
+    updateFoodChainDisplay(drillNumber);
+    updateCalorieAnalysis(drillNumber);
+    updateTerrainWarnings(drillNumber);
+  }
+
+  // Update food chain visualization
+  function updateFoodChainDisplay(drillNumber) {
+    const display = document.getElementById(`food-chain-display-${drillNumber}`);
+    const selectedSpecies = Array.from(document.querySelectorAll(`#ecosystem-display-${drillNumber} .species-in-ecosystem`)).map(el => el.dataset.name);
+
+    if (selectedSpecies.length === 0) {
+      display.innerHTML = 'No species selected yet';
+      return;
+    }
+
+    // Find producers
+    const producers = selectedSpecies.filter(name => {
+      const species = speciesData[drillNumber].find(s => s.name === name);
+      return species.type === 'producer';
+    });
+
+    // Find consumers and build food chain
+    let foodChainHTML = '';
+
+    producers.forEach(producer => {
+      let chain = producer;
+      let currentSpecies = producer;
+      let foundConsumer = true;
+
+      while (foundConsumer) {
+        foundConsumer = false;
+        const consumers = selectedSpecies.filter(name => {
+          const species = speciesData[drillNumber].find(s => s.name === name);
+          return species.prey && species.prey.includes(currentSpecies);
+        });
+
+        if (consumers.length > 0) {
+          foundConsumer = true;
+          currentSpecies = consumers[0]; // Just show one path for simplicity
+          chain += ' → ' + currentSpecies;
+        }
+      }
+
+      foodChainHTML += `<p>${chain}</p>`;
+    });
+
+    display.innerHTML = foodChainHTML || 'No complete food chains detected';
+  }
+
+  // Update calorie analysis
+  function updateCalorieAnalysis(drillNumber) {
+    const display = document.getElementById(`calorie-display-${drillNumber}`);
+    const warningsDisplay = document.getElementById(`calorie-warnings-${drillNumber}`);
+    const selectedSpecies = Array.from(document.querySelectorAll(`#ecosystem-display-${drillNumber} .species-in-ecosystem`)).map(el => el.dataset.name);
+
+    if (selectedSpecies.length === 0) {
+      display.innerHTML = 'No species selected yet';
+      warningsDisplay.innerHTML = '';
+      return;
+    }
+
+    let analysisHTML = '';
+    let warnings = [];
+
+    // Check each species' calorie balance
+    selectedSpecies.forEach(speciesName => {
+      const species = speciesData[drillNumber].find(s => s.name === speciesName);
+
+      if (species.type === 'producer') {
+        analysisHTML += `<p><strong>${species.name}</strong>: Produces ${species.caloriesProduced} calories</p>`;
+      } else {
+        // Find all species that prey on this one
+        const predators = selectedSpecies.filter(name => {
+          const predator = speciesData[drillNumber].find(s => s.name === name);
+          return predator.prey && predator.prey.includes(speciesName);
+        });
+
+        // Calculate total calories provided to predators
+        let totalConsumed = 0;
+        predators.forEach(predatorName => {
+          const predator = speciesData[drillNumber].find(s => s.name === predatorName);
+          // Simple assumption: each predator consumes 1 prey per time period
+          totalConsumed += predator.caloriesNeeded;
+        });
+
+        // Check if species has enough calories
+        const hasEnoughFood = species.prey.every(preyName => {
+          const prey = speciesData[drillNumber].find(s => s.name === preyName);
+          return prey && prey.caloriesProduced > species.caloriesNeeded;
+        });
+
+        analysisHTML += `<p><strong>${species.name}</strong>: Needs ${species.caloriesNeeded} calories `;
+        analysisHTML += `| Consumed by ${predators.length} predators (${totalConsumed} cal)`;
+
+        if (!hasEnoughFood) {
+          warnings.push(`${species.name} doesn't have enough food sources`);
+          analysisHTML += ` <span class="warning">[WARNING]</span>`;
+        }
+        if (totalConsumed > species.caloriesProduced) {
+          warnings.push(`${species.name} is being overconsumed by predators`);
+          analysisHTML += ` <span class="warning">[WARNING]</span>`;
+        }
+
+        analysisHTML += `</p>`;
+      }
+    });
+
+    display.innerHTML = analysisHTML;
+    warningsDisplay.innerHTML = warnings.length > 0 ?
+            `<h4>Warnings:</h4><ul>${warnings.map(w => `<li>${w}</li>`).join('')}</ul>` :
+            '<p>No calorie balance issues detected</p>';
+  }
+
+  // Check terrain compatibility
+  function updateTerrainWarnings(drillNumber) {
+    const warningsDisplay = document.getElementById(`terrain-warnings-${drillNumber}`);
+    const selectedSpecies = Array.from(document.querySelectorAll(`#ecosystem-display-${drillNumber} .species-in-ecosystem`)).map(el => el.dataset.name);
+
+    if (selectedSpecies.length === 0) {
+      warningsDisplay.innerHTML = '';
+      return;
+    }
+
+    let warnings = [];
+    const terrainTypes = getTerrainTypes(drillNumber);
+    const currentTerrain = {};
+
+    // Get current terrain values
+    terrainTypes.forEach(terrain => {
+      const slider = document.getElementById(`${terrain}-${drillNumber}`);
+      if (slider) {
+        currentTerrain[terrain] = parseFloat(slider.value);
+      }
+    });
+
+    // Check each species against current terrain
+    selectedSpecies.forEach(speciesName => {
+      const species = speciesData[drillNumber].find(s => s.name === speciesName);
+      const incompatible = [];
+
+      Object.keys(species.terrain).forEach(terrain => {
+        const range = species.terrain[terrain];
+        const value = currentTerrain[terrain];
+
+        if (value < range[0] || value > range[1]) {
+          incompatible.push(`${terrain} (${value} outside ${range[0]}-${range[1]})`);
+        }
+      });
+
+      if (incompatible.length > 0) {
+        warnings.push(`${species.name} has incompatible terrain requirements: ${incompatible.join(', ')}`);
+      }
+    });
+
+    warningsDisplay.innerHTML = warnings.length > 0 ?
+            `<h4>Terrain Warnings:</h4><ul>${warnings.map(w => `<li class="warning">${w}</li>`).join('')}</ul>` :
+            '<p>All species are compatible with current terrain settings</p>';
+  }
+
+  // Check the submitted solution
+  function checkSolution(drillNumber) {
+    const selectedSpecies = Array.from(document.querySelectorAll(`#ecosystem-display-${drillNumber} .species-in-ecosystem`)).map(el => el.dataset.name);
+    const feedbackElement = document.getElementById(`feedback-${drillNumber}`);
+
+    // Check terrain compatibility
+    const terrainWarnings = document.querySelectorAll(`#terrain-warnings-${drillNumber} .warning`).length;
+
+    // Check calorie balance
+    const calorieWarnings = document.querySelectorAll(`#calorie-warnings-${drillNumber} li`).length;
+
+    // Check if all solution species are included
+    const correctSpecies = solutions[drillNumber].every(species => selectedSpecies.includes(species));
+
+    if (correctSpecies && terrainWarnings === 0 && calorieWarnings === 0) {
+      feedbackElement.textContent = "✅ Excellent! Your ecosystem meets all requirements with no warnings.";
+      feedbackElement.className = "feedback correct";
+    } else {
+      let feedback = "❌ Needs improvement: ";
+      const issues = [];
+
+      if (!correctSpecies) issues.push("missing key species");
+      if (terrainWarnings > 0) issues.push("terrain incompatibilities");
+      if (calorieWarnings > 0) issues.push("calorie imbalances");
+
+      feedback += issues.join(", ");
+      feedbackElement.textContent = feedback;
+      feedbackElement.className = "feedback incorrect";
+    }
+  }
+
+  // Show solution for a drill
+  function showSolution(e) {
+    const drillNumber = e.target.dataset.drill;
+    const solutionElement = document.getElementById(`solution-${drillNumber}`);
+    solutionElement.style.display = solutionElement.style.display === 'block' ? 'none' : 'block';
+    e.target.textContent = solutionElement.style.display === 'block' ? 'Hide Solution' : 'Show Solution';
+  }
+
+  // Navigate between drills
+  function navigateDrill(direction) {
+    const newDrill = currentDrill + direction;
+    if (newDrill >= 1 && newDrill <= 5) {
+      initializeDrill(newDrill);
+    }
+  }
+
+  // Tab functionality
+  function openTab(evt, tabName) {
+    const tabcontent = document.getElementsByClassName("tabcontent");
+    for (let i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    const tablinks = document.getElementsByClassName("tablinks");
+    for (let i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  // Timer functions
+  function startTimer() {
+    if (!isTimerRunning) {
+      isTimerRunning = true;
+      startBtn.textContent = 'Pause';
+      timer = setInterval(updateTimer, 1000);
+    } else {
+      pauseTimer();
+    }
+  }
+
+  function pauseTimer() {
+    isTimerRunning = false;
+    startBtn.textContent = 'Resume';
+    clearInterval(timer);
+  }
+
+  function resetTimer() {
+    pauseTimer();
+    seconds = 0;
+    updateTimerDisplay();
+    startBtn.textContent = 'Start Drill';
+  }
+
+  function updateTimer() {
+    seconds++;
+    updateTimerDisplay();
+
+    // Check if time limit reached
+    if (seconds >= timeLimit) {
+      clearInterval(timer);
+      alert("Time's up for this drill! Consider reviewing the solution.");
+      isTimerRunning = false;
+      startBtn.disabled = true;
+    }
+  }
+
+  function updateTimerDisplay() {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+</script>
+</body>
+</html>

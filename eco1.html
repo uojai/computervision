@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McKinsey Ecosystem Building Drills</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .drill {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .timer-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+        }
+        .timer {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .solution {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f8f5;
+            border-radius: 5px;
+            border-left: 4px solid #2ecc71;
+        }
+        .species-card {
+            display: inline-block;
+            width: 120px;
+            padding: 10px;
+            margin: 5px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .species-card.selected {
+            background-color: #d4edff;
+            border-color: #3498db;
+        }
+        .ecosystem-display {
+            min-height: 150px;
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 15px 0;
+            background-color: white;
+        }
+        .terrain-selector {
+            margin: 15px 0;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>McKinsey Ecosystem Building Drills</h1>
+    <p>Practice for the McKinsey Problem Solving Game with these 5 ecosystem building exercises. Each drill has a 35-minute time limit.</p>
+
+    <div class="timer-container">
+        <div>Drill: <span id="current-drill">1</span>/5</div>
+        <div>Time Limit: 35:00</div>
+        <div>Elapsed: <span class="timer" id="timer">00:00</span></div>
+        <button id="start-btn">Start Drill</button>
+    </div>
+
+    <div id="drill-1" class="drill">
+        <h2>Drill 1: Forest Ecosystem</h2>
+        <div class="terrain-selector">
+            <strong>Terrain:</strong> Dense forest with a river running through it
+        </div>
+        <p><strong>Objective:</strong> Build an ecosystem with 8 species that forms a complete food chain with calorie surplus for each predator-prey pair. The ecosystem must be suited to the forest terrain.</p>
+
+        <h3>Available Species (Select 8):</h3>
+        <div id="species-container-1"></div>
+
+        <h3>Your Ecosystem:</h3>
+        <div id="ecosystem-display-1" class="ecosystem-display"></div>
+
+        <button id="submit-1" disabled>Submit Ecosystem</button>
+        <div id="feedback-1" class="feedback"></div>
+
+        <button class="show-solution" data-drill="1">Show Solution</button>
+        <div id="solution-1" class="solution">
+            <h3>Recommended Solution:</h3>
+            <p><strong>Food Chain:</strong> Oak Tree → Caterpillar → Songbird → Hawk</p>
+            <p><strong>Additional Species:</strong> Deer, Fox, Mushrooms, Earthworm</p>
+            <p><strong>Calorie Analysis:</strong></p>
+            <ul>
+                <li>Oak Tree (50,000 cal) supports many caterpillars (each needs 200 cal)</li>
+                <li>Each songbird needs 5 caterpillars (1,000 cal total)</li>
+                <li>Hawk needs 3 songbirds (3,000 cal)</li>
+            </ul>
+            <p><strong>Terrain Fit:</strong> All species are native to forest environments. The river provides water for all species.</p>
+            <p><strong>Key Considerations:</strong></p>
+            <ol>
+                <li>Start with a primary producer (Oak Tree)</li>
+                <li>Add herbivores that feed on it (Caterpillar, Deer)</li>
+                <li>Add predators at different levels (Songbird, Fox, Hawk)</li>
+                <li>Include decomposers (Mushrooms, Earthworm) to complete nutrient cycle</li>
+                <li>Verify calorie needs are met at each level</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="drill-2" class="drill" style="display:none;">
+        <h2>Drill 2: Coral Reef Ecosystem</h2>
+        <div class="terrain-selector">
+            <strong>Terrain:</strong> Tropical coral reef in shallow waters
+        </div>
+        <p><strong>Objective:</strong> Build an ecosystem with 8 species that forms a complete food chain with calorie surplus for each predator-prey pair. The ecosystem must be suited to coral reef environments.</p>
+
+        <h3>Available Species (Select 8):</h3>
+        <div id="species-container-2"></div>
+
+        <h3>Your Ecosystem:</h3>
+        <div id="ecosystem-display-2" class="ecosystem-display"></div>
+
+        <button id="submit-2" disabled>Submit Ecosystem</button>
+        <div id="feedback-2" class="feedback"></div>
+
+        <button class="show-solution" data-drill="2">Show Solution</button>
+        <div id="solution-2" class="solution">
+            <h3>Recommended Solution:</h3>
+            <p><strong>Food Chain:</strong> Phytoplankton → Zooplankton → Clownfish → Moray Eel</p>
+            <p><strong>Additional Species:</strong> Coral, Sea Turtle, Parrotfish, Cleaner Shrimp</p>
+            <p><strong>Calorie Analysis:</strong></p>
+            <ul>
+                <li>Phytoplankton (massive caloric production) supports zooplankton</li>
+                <li>Zooplankton colonies support small fish populations</li>
+                <li>Clownfish need about 50 zooplankton per day (500 cal)</li>
+                <li>Moray eel needs about 3 clownfish per week (3,000 cal)</li>
+            </ul>
+            <p><strong>Terrain Fit:</strong> All species are native to coral reef ecosystems. Coral provides shelter for many species.</p>
+            <p><strong>Key Considerations:</strong></p>
+            <ol>
+                <li>Start with microscopic producers (Phytoplankton)</li>
+                <li>Add filter feeders (Zooplankton, Coral)</li>
+                <li>Include small fish (Clownfish) and their predators (Moray Eel)</li>
+                <li>Add specialized species (Cleaner Shrimp) for ecosystem balance</li>
+                <li>Include herbivores (Parrotfish) to prevent algal overgrowth</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Additional drills would continue here -->
+    <!-- Drill 3 -->
+    <div id="drill-3" class="drill" style="display:none;">
+        <h2>Drill 3: Grassland Ecosystem</h2>
+        <div class="terrain-selector">
+            <strong>Terrain:</strong> Temperate grassland with seasonal rainfall
+        </div>
+        <p><strong>Objective:</strong> Build an ecosystem with 8 species that forms a complete food chain with calorie surplus for each predator-prey pair. The ecosystem must be suited to grassland environments.</p>
+
+        <h3>Available Species (Select 8):</h3>
+        <div id="species-container-3"></div>
+
+        <h3>Your Ecosystem:</h3>
+        <div id="ecosystem-display-3" class="ecosystem-display"></div>
+
+        <button id="submit-3" disabled>Submit Ecosystem</button>
+        <div id="feedback-3" class="feedback"></div>
+
+        <button class="show-solution" data-drill="3">Show Solution</button>
+        <div id="solution-3" class="solution">
+            <h3>Recommended Solution:</h3>
+            <p><strong>Food Chain:</strong> Grass → Grasshopper → Prairie Dog → Coyote</p>
+            <p><strong>Additional Species:</strong> Bison, Hawk, Earthworm, Wildflower</p>
+            <p><strong>Calorie Analysis:</strong></p>
+            <ul>
+                <li>1 acre of grass produces ~2 million calories annually</li>
+                <li>Grasshoppers consume about 1/2 their weight daily (50 cal)</li>
+                <li>Prairie dogs need ~100 grasshoppers daily (5,000 cal)</li>
+                <li>Coyote needs about 1 prairie dog every 3 days (1,600 cal/day)</li>
+            </ul>
+            <p><strong>Terrain Fit:</strong> All species are adapted to open grassland environments with seasonal variations.</p>
+            <p><strong>Key Considerations:</strong></p>
+            <ol>
+                <li>Include primary grazers (Bison) to maintain grass health</li>
+                <li>Add multiple predator levels to balance populations</li>
+                <li>Include pollinators (bees via wildflowers) for plant reproduction</li>
+                <li>Add decomposers (Earthworm) for nutrient cycling</li>
+                <li>Ensure apex predator (Coyote) has sufficient prey base</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Drill 4 -->
+    <div id="drill-4" class="drill" style="display:none;">
+        <h2>Drill 4: Arctic Tundra Ecosystem</h2>
+        <div class="terrain-selector">
+            <strong>Terrain:</strong> Frozen tundra with permafrost, short summers
+        </div>
+        <p><strong>Objective:</strong> Build an ecosystem with 8 species that forms a complete food chain with calorie surplus for each predator-prey pair. The ecosystem must be suited to extreme cold environments.</p>
+
+        <h3>Available Species (Select 8):</h3>
+        <div id="species-container-4"></div>
+
+        <h3>Your Ecosystem:</h3>
+        <div id="ecosystem-display-4" class="ecosystem-display"></div>
+
+        <button id="submit-4" disabled>Submit Ecosystem</button>
+        <div id="feedback-4" class="feedback"></div>
+
+        <button class="show-solution" data-drill="4">Show Solution</button>
+        <div id="solution-4" class="solution">
+            <h3>Recommended Solution:</h3>
+            <p><strong>Food Chain:</strong> Lichen → Arctic Hare → Arctic Fox → Polar Bear</p>
+            <p><strong>Additional Species:</strong> Moss, Lemming, Snowy Owl, Caribou</p>
+            <p><strong>Calorie Analysis:</strong></p>
+            <ul>
+                <li>Lichen grows slowly but is extremely nutrient-dense (500 cal/sq meter)</li>
+                <li>Arctic hare needs ~1kg lichen daily (3,000 cal)</li>
+                <li>Arctic fox needs 1 hare every 5 days (600 cal/day)</li>
+                <li>Polar bear needs 1 fox every 10 days (plus seals, 12,000 cal/day)</li>
+            </ul>
+            <p><strong>Terrain Fit:</strong> All species have adaptations for extreme cold (thick fur, fat layers, hibernation abilities).</p>
+            <p><strong>Key Considerations:</strong></p>
+            <ol>
+                <li>Focus on cold-adapted primary producers (Lichen, Moss)</li>
+                <li>Include migratory species (Caribou) that can exploit seasonal resources</li>
+                <li>Add multiple small prey options (Lemming, Hare) to support predators</li>
+                <li>Account for lower productivity with higher calorie storage needs</li>
+                <li>Include apex predator (Polar Bear) but note it may need additional food sources</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Drill 5 -->
+    <div id="drill-5" class="drill" style="display:none;">
+        <h2>Drill 5: Urban Ecosystem</h2>
+        <div class="terrain-selector">
+            <strong>Terrain:</strong> Dense city with parks and water features
+        </div>
+        <p><strong>Objective:</strong> Build an ecosystem with 8 species that forms a complete food chain with calorie surplus for each predator-prey pair. The ecosystem must be suited to urban environments.</p>
+
+        <h3>Available Species (Select 8):</h3>
+        <div id="species-container-5"></div>
+
+        <h3>Your Ecosystem:</h3>
+        <div id="ecosystem-display-5" class="ecosystem-display"></div>
+
+        <button id="submit-5" disabled>Submit Ecosystem</button>
+        <div id="feedback-5" class="feedback"></div>
+
+        <button class="show-solution" data-drill="5">Show Solution</button>
+        <div id="solution-5" class="solution">
+            <h3>Recommended Solution:</h3>
+            <p><strong>Food Chain:</strong> Street Trees → Pigeon → Peregrine Falcon</p>
+            <p><strong>Additional Species:</strong> Rats, Squirrels, Raccoons, Insects, Domestic Cats, Algae</p>
+            <p><strong>Calorie Analysis:</strong></p>
+            <ul>
+                <li>Urban trees produce limited but concentrated calories (fruit, nuts)</li>
+                <li>Pigeons need ~30g seeds daily (150 cal)</li>
+                <li>Peregrine falcon needs 1 pigeon every 2-3 days (300 cal/day)</li>
+                <li>Raccoons and cats supplement with human garbage</li>
+            </ul>
+            <p><strong>Terrain Fit:</strong> All species are adapted to human presence and can exploit artificial structures.</p>
+            <p><strong>Key Considerations:</strong></p>
+            <ol>
+                <li>Include species that can utilize human resources (garbage, feeders)</li>
+                <li>Account for vertical space (buildings for birds, underground for rodents)</li>
+                <li>Include both natural and human-assisted food sources</li>
+                <li>Consider disease vectors in dense populations</li>
+                <li>Balance predator-prey ratios given artificial constraints</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button id="prev-btn" disabled>Previous Drill</button>
+        <button id="next-btn">Next Drill</button>
+    </div>
+</div>
+
+<script>
+    // Species data for each drill
+    const speciesData = {
+        1: [
+            {name: "Oak Tree", type: "producer", calories: 50000, terrain: "forest"},
+            {name: "Caterpillar", type: "herbivore", calories: 200, prey: ["Oak Tree"], terrain: "forest"},
+            {name: "Deer", type: "herbivore", calories: 8000, prey: ["Oak Tree"], terrain: "forest"},
+            {name: "Songbird", type: "omnivore", calories: 1000, prey: ["Caterpillar", "Earthworm"], terrain: "forest"},
+            {name: "Fox", type: "carnivore", calories: 3000, prey: ["Songbird", "Rabbit"], terrain: "forest"},
+            {name: "Hawk", type: "carnivore", calories: 1500, prey: ["Songbird", "Mouse"], terrain: "forest"},
+            {name: "Mushrooms", type: "decomposer", calories: 500, prey: ["Oak Tree", "Deer"], terrain: "forest"},
+            {name: "Earthworm", type: "decomposer", calories: 50, prey: ["Oak Tree"], terrain: "forest"},
+            {name: "Rabbit", type: "herbivore", calories: 600, prey: ["Grass"], terrain: "grassland"},
+            {name: "Mouse", type: "omnivore", calories: 100, prey: ["Seeds", "Insects"], terrain: "forest"},
+            {name: "Grass", type: "producer", calories: 20000, terrain: "grassland"},
+            {name: "Bear", type: "omnivore", calories: 10000, prey: ["Deer", "Fish"], terrain: "forest"},
+            {name: "Fish", type: "omnivore", calories: 500, prey: ["Insects"], terrain: "river"}
+        ],
+        2: [
+            {name: "Phytoplankton", type: "producer", calories: 100000, terrain: "water"},
+            {name: "Zooplankton", type: "herbivore", calories: 10, prey: ["Phytoplankton"], terrain: "water"},
+            {name: "Coral", type: "filterfeeder", calories: 5000, prey: ["Zooplankton"], terrain: "reef"},
+            {name: "Clownfish", type: "omnivore", calories: 500, prey: ["Zooplankton", "Algae"], terrain: "reef"},
+            {name: "Parrotfish", type: "herbivore", calories: 800, prey: ["Algae", "Coral"], terrain: "reef"},
+            {name: "Moray Eel", type: "carnivore", calories: 3000, prey: ["Clownfish", "Parrotfish"], terrain: "reef"},
+            {name: "Sea Turtle", type: "omnivore", calories: 5000, prey: ["Jellyfish", "Seagrass"], terrain: "reef"},
+            {name: "Cleaner Shrimp", type: "scavenger", calories: 50, prey: ["Parasites"], terrain: "reef"},
+            {name: "Algae", type: "producer", calories: 20000, terrain: "water"},
+            {name: "Jellyfish", type: "carnivore", calories: 300, prey: ["Zooplankton"], terrain: "water"},
+            {name: "Seagrass", type: "producer", calories: 15000, terrain: "water"},
+            {name: "Shark", type: "carnivore", calories: 10000, prey: ["Moray Eel", "Sea Turtle"], terrain: "reef"},
+            {name: "Octopus", type: "carnivore", calories: 2000, prey: ["Crab", "Clownfish"], terrain: "reef"}
+        ],
+        3: [
+            {name: "Grass", type: "producer", calories: 2000000, terrain: "grassland"},
+            {name: "Grasshopper", type: "herbivore", calories: 50, prey: ["Grass"], terrain: "grassland"},
+            {name: "Bison", type: "herbivore", calories: 20000, prey: ["Grass"], terrain: "grassland"},
+            {name: "Prairie Dog", type: "herbivore", calories: 5000, prey: ["Grass", "Seeds"], terrain: "grassland"},
+            {name: "Coyote", type: "carnivore", calories: 1600, prey: ["Prairie Dog", "Rabbit"], terrain: "grassland"},
+            {name: "Hawk", type: "carnivore", calories: 800, prey: ["Grasshopper", "Mouse"], terrain: "grassland"},
+            {name: "Earthworm", type: "decomposer", calories: 20, prey: ["Grass"], terrain: "grassland"},
+            {name: "Wildflower", type: "producer", calories: 50000, terrain: "grassland"},
+            {name: "Rabbit", type: "herbivore", calories: 600, prey: ["Grass"], terrain: "grassland"},
+            {name: "Mouse", type: "omnivore", calories: 100, prey: ["Seeds", "Insects"], terrain: "grassland"},
+            {name: "Snake", type: "carnivore", calories: 300, prey: ["Mouse"], terrain: "grassland"},
+            {name: "Badger", type: "omnivore", calories: 1200, prey: ["Prairie Dog", "Insects"], terrain: "grassland"},
+            {name: "Fox", type: "carnivore", calories: 1000, prey: ["Rabbit", "Mouse"], terrain: "grassland"}
+        ],
+        4: [
+            {name: "Lichen", type: "producer", calories: 500, terrain: "tundra"},
+            {name: "Moss", type: "producer", calories: 300, terrain: "tundra"},
+            {name: "Arctic Hare", type: "herbivore", calories: 3000, prey: ["Lichen", "Moss"], terrain: "tundra"},
+            {name: "Lemming", type: "herbivore", calories: 200, prey: ["Moss"], terrain: "tundra"},
+            {name: "Arctic Fox", type: "carnivore", calories: 600, prey: ["Lemming", "Arctic Hare"], terrain: "tundra"},
+            {name: "Snowy Owl", type: "carnivore", calories: 400, prey: ["Lemming"], terrain: "tundra"},
+            {name: "Polar Bear", type: "carnivore", calories: 12000, prey: ["Seal", "Arctic Fox"], terrain: "tundra"},
+            {name: "Caribou", type: "herbivore", calories: 15000, prey: ["Lichen"], terrain: "tundra"},
+            {name: "Seal", type: "carnivore", calories: 8000, prey: ["Fish"], terrain: "arctic water"},
+            {name: "Wolf", type: "carnivore", calories: 5000, prey: ["Caribou"], terrain: "tundra"},
+            {name: "Arctic Wolf", type: "carnivore", calories: 4000, prey: ["Arctic Hare"], terrain: "tundra"},
+            {name: "Fish", type: "omnivore", calories: 500, prey: ["Plankton"], terrain: "water"},
+            {name: "Ptarmigan", type: "herbivore", calories: 800, prey: ["Willow"], terrain: "tundra"}
+        ],
+        5: [
+            {name: "Street Trees", type: "producer", calories: 5000, terrain: "urban"},
+            {name: "Pigeon", type: "omnivore", calories: 150, prey: ["Seeds", "Bread"], terrain: "urban"},
+            {name: "Rats", type: "omnivore", calories: 300, prey: ["Garbage", "Insects"], terrain: "urban"},
+            {name: "Squirrels", type: "herbivore", calories: 200, prey: ["Nuts"], terrain: "urban"},
+            {name: "Raccoons", type: "omnivore", calories: 800, prey: ["Garbage", "Insects"], terrain: "urban"},
+            {name: "Peregrine Falcon", type: "carnivore", calories: 300, prey: ["Pigeon"], terrain: "urban"},
+            {name: "Insects", type: "omnivore", calories: 5, prey: ["Plants", "Garbage"], terrain: "urban"},
+            {name: "Domestic Cats", type: "carnivore", calories: 200, prey: ["Rats", "Birds"], terrain: "urban"},
+            {name: "Algae", type: "producer", calories: 1000, terrain: "water"},
+            {name: "Ducks", type: "omnivore", calories: 400, prey: ["Bread", "Insects"], terrain: "urban"},
+            {name: "Opossum", type: "omnivore", calories: 500, prey: ["Garbage", "Insects"], terrain: "urban"},
+            {name: "Hawk", type: "carnivore", calories: 350, prey: ["Squirrels", "Rats"], terrain: "urban"},
+            {name: "Bats", type: "omnivore", calories: 100, prey: ["Insects"], terrain: "urban"}
+        ]
+    };
+
+    // Solutions for each drill
+    const solutions = {
+        1: ["Oak Tree", "Caterpillar", "Songbird", "Hawk", "Deer", "Fox", "Mushrooms", "Earthworm"],
+        2: ["Phytoplankton", "Zooplankton", "Clownfish", "Moray Eel", "Coral", "Sea Turtle", "Parrotfish", "Cleaner Shrimp"],
+        3: ["Grass", "Grasshopper", "Prairie Dog", "Coyote", "Bison", "Hawk", "Earthworm", "Wildflower"],
+        4: ["Lichen", "Arctic Hare", "Arctic Fox", "Polar Bear", "Moss", "Lemming", "Snowy Owl", "Caribou"],
+        5: ["Street Trees", "Pigeon", "Peregrine Falcon", "Rats", "Squirrels", "Raccoons", "Insects", "Domestic Cats"]
+    };
+
+    // Initialize variables
+    let currentDrill = 1;
+    let timer;
+    let seconds = 0;
+    let isTimerRunning = false;
+    const timeLimit = 35 * 60; // 35 minutes in seconds
+
+    // DOM elements
+    const startBtn = document.getElementById('start-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const timerDisplay = document.getElementById('timer');
+    const currentDrillDisplay = document.getElementById('current-drill');
+
+    // Initialize the first drill
+    initializeDrill(1);
+
+    // Event listeners
+    startBtn.addEventListener('click', startTimer);
+    prevBtn.addEventListener('click', () => navigateDrill(-1));
+    nextBtn.addEventListener('click', () => navigateDrill(1));
+    document.querySelectorAll('.show-solution').forEach(btn => {
+        btn.addEventListener('click', showSolution);
+    });
+
+    // Initialize a drill
+    function initializeDrill(drillNumber) {
+        currentDrill = drillNumber;
+        currentDrillDisplay.textContent = drillNumber;
+
+        // Hide all drills and show the current one
+        document.querySelectorAll('.drill').forEach(drill => {
+            drill.style.display = 'none';
+        });
+        document.getElementById(`drill-${drillNumber}`).style.display = 'block';
+
+        // Update navigation buttons
+        prevBtn.disabled = drillNumber === 1;
+        nextBtn.disabled = drillNumber === 5;
+
+        // Reset timer for new drill
+        resetTimer();
+
+        // Populate species cards
+        const container = document.getElementById(`species-container-${drillNumber}`);
+        container.innerHTML = '';
+
+        speciesData[drillNumber].forEach(species => {
+            const card = document.createElement('div');
+            card.className = 'species-card';
+            card.textContent = species.name;
+            card.dataset.name = species.name;
+            card.addEventListener('click', () => selectSpecies(drillNumber, species.name));
+            container.appendChild(card);
+        });
+
+        // Clear ecosystem display
+        document.getElementById(`ecosystem-display-${drillNumber}`).innerHTML = '';
+
+        // Reset submit button
+        const submitBtn = document.getElementById(`submit-${drillNumber}`);
+        submitBtn.disabled = true;
+        submitBtn.addEventListener('click', () => checkSolution(drillNumber));
+
+        // Hide feedback and solution
+        document.getElementById(`feedback-${drillNumber}`).textContent = '';
+        document.getElementById(`solution-${drillNumber}`).style.display = 'none';
+    }
+
+    // Select species for the ecosystem
+    function selectSpecies(drillNumber, speciesName) {
+        const ecosystemDisplay = document.getElementById(`ecosystem-display-${drillNumber}`);
+        const card = document.querySelector(`#species-container-${drillNumber} .species-card[data-name="${speciesName}"]`);
+
+        if (card.classList.contains('selected')) {
+            // Remove from ecosystem
+            card.classList.remove('selected');
+            const speciesElement = document.querySelector(`#ecosystem-display-${drillNumber} .species[data-name="${speciesName}"]`);
+            if (speciesElement) speciesElement.remove();
+        } else {
+            // Add to ecosystem if we have less than 8
+            const currentCount = document.querySelectorAll(`#ecosystem-display-${drillNumber} .species`).length;
+            if (currentCount < 8) {
+                card.classList.add('selected');
+                const speciesElement = document.createElement('span');
+                speciesElement.className = 'species';
+                speciesElement.textContent = speciesName;
+                speciesElement.dataset.name = speciesName;
+                ecosystemDisplay.appendChild(speciesElement);
+            }
+        }
+
+        // Enable/disable submit button based on selection count
+        const submitBtn = document.getElementById(`submit-${drillNumber}`);
+        const selectedCount = document.querySelectorAll(`#ecosystem-display-${drillNumber} .species`).length;
+        submitBtn.disabled = selectedCount !== 8;
+    }
+
+    // Check the submitted solution
+    function checkSolution(drillNumber) {
+        const selectedSpecies = Array.from(document.querySelectorAll(`#ecosystem-display-${drillNumber} .species`)).map(el => el.dataset.name);
+        const feedbackElement = document.getElementById(`feedback-${drillNumber}`);
+
+        // Check if all solution species are included
+        const correctSpecies = solutions[drillNumber].every(species => selectedSpecies.includes(species));
+
+        if (correctSpecies) {
+            feedbackElement.textContent = "✅ Correct! Your ecosystem meets all requirements.";
+            feedbackElement.className = "feedback correct";
+        } else {
+            feedbackElement.textContent = "❌ Not quite right. Check if your ecosystem has a complete food chain, calorie surplus, and terrain fit.";
+            feedbackElement.className = "feedback incorrect";
+        }
+    }
+
+    // Show solution for a drill
+    function showSolution(e) {
+        const drillNumber = e.target.dataset.drill;
+        const solutionElement = document.getElementById(`solution-${drillNumber}`);
+        solutionElement.style.display = solutionElement.style.display === 'block' ? 'none' : 'block';
+        e.target.textContent = solutionElement.style.display === 'block' ? 'Hide Solution' : 'Show Solution';
+    }
+
+    // Navigate between drills
+    function navigateDrill(direction) {
+        const newDrill = currentDrill + direction;
+        if (newDrill >= 1 && newDrill <= 5) {
+            initializeDrill(newDrill);
+        }
+    }
+
+    // Timer functions
+    function startTimer() {
+        if (!isTimerRunning) {
+            isTimerRunning = true;
+            startBtn.textContent = 'Pause';
+            timer = setInterval(updateTimer, 1000);
+        } else {
+            pauseTimer();
+        }
+    }
+
+    function pauseTimer() {
+        isTimerRunning = false;
+        startBtn.textContent = 'Resume';
+        clearInterval(timer);
+    }
+
+    function resetTimer() {
+        pauseTimer();
+        seconds = 0;
+        updateTimerDisplay();
+        startBtn.textContent = 'Start Drill';
+    }
+
+    function updateTimer() {
+        seconds++;
+        updateTimerDisplay();
+
+        // Check if time limit reached
+        if (seconds >= timeLimit) {
+            clearInterval(timer);
+            alert("Time's up for this drill! Consider reviewing the solution.");
+            isTimerRunning = false;
+            startBtn.disabled = true;
+        }
+    }
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+</script>
+</body>
+</html>
