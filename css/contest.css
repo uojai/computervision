@@ -161,12 +161,12 @@ a:hover {
     background: #f3c977;
     border-radius: 100%;
     /* border-color: #ffffff; */
-    border: 2px solid #ffffff;
-    height: 2.5rem;
-    width: 2.5rem;
-    padding-top: 5px;
+    border: 3px solid #ffffff;
+    height: 3.0rem;
+    width: 3.0rem;
     line-height: 1.7rem;
-    padding-left: 0.25rem;
+    padding-left: 0.35rem;
+    padding-top: 0.5rem;
 }
 
 .dataset {
