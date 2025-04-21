@@ -73,6 +73,9 @@ table tr:last-child {
     font-weight: inherit
 }
 
+.cool-text {
+    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+}
 
 .cool-title {
     font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
@@ -11479,6 +11482,11 @@ html[dir=rtl] .rounded-left {
     color: #fff!important
 }
 
+.bg-paper-yellow {
+    background-color: #fdd17a!important;
+    color: #000
+}
+
 .bg-transparent-text-dark a:not(.btn),.bg-transparent-text-light a:not(.btn) {
     color: inherit
 }
@@ -19266,6 +19274,10 @@ html[dir=rtl] .text-right {
     font-weight: 700;
     font-size: 12.0px;
     line-height: 140%;
+}
+
+.project {
+    color: #000000;
 }
 
 .bullet {
