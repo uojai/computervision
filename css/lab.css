@@ -1,7 +1,0 @@
-.align-td-bottom {
-    vertical-align: bottom;
-}
-
-table tr:last-child {
-    border-bottom: none;
-}
