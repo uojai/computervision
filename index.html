@@ -1,235 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCS514 – Computer Vision | University of Jordan</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<html lang="en-US" style="scroll-padding-top: 72px;">
-<head class="at-element-marker">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="SHORTCUT ICON" href="/favicon.ico" type="image/x-icon">
-    <meta name="robots" content="index, follow">
-    <title>Computer Vision | University of Juba</title>
-    <meta name="description" content="Deep Learning">
-    <link rel="stylesheet" href="css/core.css?v=2" type="text/css">
-    <link rel="stylesheet" href="css/grid.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css?v=8" type="text/css">
+    body {
+      font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      /*background: #f8fafc;*/
+      background: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+    }
+
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f1f5f9;
+      padding: 3rem 2.5rem;
+      border-radius: 1.75rem;
+      margin: 2rem 0 2rem 0;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+
+    .hero-text {
+      max-width: 100%;
+      text-align: left;
+    }
+
+    /* Logo wrapper: centers the inline-block link */
+    .logo-wrapper {
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+    .university-logo {
+      display: inline-block;   /* only as wide as the image */
+      transition: transform 0.2s ease;
+    }
+    .university-logo:hover {
+      transform: scale(1.1);
+    }
+    .logo-image {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      transition: filter 0.2s;
+    }
+    .university-logo:hover .logo-image {
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.25));
+    }
+
+    .course-code {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      padding: 0.25rem 0.9rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.75rem;
+      border: 0.5px solid rgba(255,255,255,0.2);
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, #cbd5e1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.85;
+      margin-bottom: 0.75rem;
+    }
+
+    .instructor-line {
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #cbd5e6;
+      border-left: 3px solid #3b82f6;
+      padding-left: 1rem;
+      display: inline-block;
+    }
+
+    .hero-description {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      line-height: 1.65;
+      opacity: 0.92;
+      max-width: 85%;
+    }
+
+    .class-schedule-line {
+      padding-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: #cbd5e6;
+      border-bottom: 2px solid rgba(94,159,242,0.15);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .class-prerequisites {
+      color: rgba(94,159,242,1.0);
+      font-size: small;
+    }
+
+    /* CNN simulation panels */
+    .cnn-flow {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.6rem;
+      row-gap: 1rem;
+      background: rgba(0,0,0,0.2);
+      padding: 1rem 1rem 0.8rem 1rem;
+      border-radius: 1.25rem;
+    }
+
+    .flow-panel {
+      text-align: center;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(4px);
+      border-radius: 0.9rem;
+      padding: 0.5rem 0.3rem;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .flow-panel:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+    .flow-panel canvas {
+      display: block;
+      margin: 0 auto;
+      border-radius: 0.6rem;
+      background: #0a0f1c;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .flow-label {
+      font-size: 0.65rem;
+      margin-top: 0.4rem;
+      font-weight: 500;
+      color: #cbd5e6;
+    }
+    .arrow {
+      font-size: 1.3rem;
+      color: #60a5fa;
+      font-weight: 600;
+      margin: 0 0.1rem;
+    }
+
+    .input-selector {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.8rem;
+      justify-content: flex-start;
+    }
+    .input-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .input-btn:hover {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(59,130,246,0.3);
+    }
+
+    /* Navigation buttons */
+    .nav-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      justify-content: center;
+    }
+    .nav-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      padding: 0.7rem 1.3rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      color: #1e293b;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      min-width: 130px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .nav-btn:hover {
+      background: #0f172a;
+      color: white;
+      border-color: #0f172a;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+    }
+
+    /* Schedule table */
+    .schedule-table {
+      overflow-x: auto;
+      margin-top: 1rem;
+      margin-bottom: 2.5rem;
+      border-radius: 1rem;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 1rem 1.2rem;
+      border-bottom: 2px solid #eef2f6;
+      /*border-bottom: 2px solid #0f172a;*/
+      /*background: #60a5fa;*/
+      /*background: rgba(96,165,250,0.15);*/
+
+    }
+    th {
+      /*background: #f8fafc;*/
+      background: #f1f5f9;
+      font-weight: 600;
+      color: #0f172a;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Assignments */
+    .assignments-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .assignment-item {
+      background: white;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1rem;
+      border-left: 5px solid #3b82f6;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+    }
+    .assignment-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    }
+    .assignment-item strong {
+      font-size: 1rem;
+    }
+
+
+    /* Grading Policy */
+    .grading-card {
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 1rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .grading-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      border-left: 4px solid #3b82f6;
+      padding-left: 0.75rem;
+    }
+    .grading-breakdown {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .grading-item {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      padding: 1rem;
+      background: #f1f5f9;
+      border-radius: 1rem;
+    }
+    .grading-item .percentage {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3b82f6;
+    }
+    .grading-item .label {
+      font-size: 0.9rem;
+      color: #475569;
+      margin-top: 0.3rem;
+    }
+    .grading-note {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: #475569;
+      text-align: center;
+      border-top: 1px solid #eef2f6;
+      padding-top: 1rem;
+    }
+
+    /* Resources */
+    .resources-card {
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 1rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .resources-card ul {
+      margin-left: 1.5rem;
+    }
+    .resources-card li {
+      margin: 0.5rem 0;
+    }
+
+    /* Staff section */
+    .staff-section {
+      margin-top: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e8f0;
+    }
+    .staff-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+    .staff-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .staff-card {
+      background: white;
+      border-radius: 1.25rem;
+      padding: 1.8rem 1rem;
+      text-align: center;
+      width: 220px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: all 0.25s;
+    }
+    .staff-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+    }
+    .staff-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 5px solid #f8fafc;
+      /*box-shadow: 0 4px 12px rgba(0,0,0,0.1);*/
+    }
+    .staff-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+    .staff-role {
+      font-size: 0.85rem;
+      color: #475569;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem 1.5rem;
+      }
+      .hero {
+        padding: 2rem 1.5rem;
+      }
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+      .hero-description {
+        max-width: 100%;
+      }
+      .instructor-line {
+        border-left: none;
+        padding-left: 0;
+        display: block;
+      }
+      .class-schedule-line {
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .cnn-flow {
+        justify-content: center;
+      }
+      .arrow {
+        display: none;
+      }
+      .nav-btn {
+        min-width: auto;
+        flex: 1 1 auto;
+        padding: 0.5rem 0.8rem;
+      }
+      .staff-card {
+        width: 170px;
+        padding: 1.2rem 0.8rem;
+      }
+      .staff-photo {
+        width: 100px;
+        height: 100px;
+      }
+      .input-selector {
+        justify-content: center;
+      }
+      .course-code {
+        font-size: 0.75rem;
+      }
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+  </style>
 </head>
 <body>
-<div>
-    <section>
-        <div class="d-flex mx-lg-0">
-            <div class="w-100 ml-5 mr-5 mt-3">
-                <div class="depth-lg-none bg-lg-transparent bg-lg-transparent depth-lg-none">
+<div class="container">
+  <!-- Hero section -->
+  <div class="hero">
+    <div class="hero-text">
+      <!-- Logo wrapper centers the inline-block link -->
+      <div class="logo-wrapper">
+        <a href="https://uojai.github.io/" target="_self" class="university-logo">
+          <img class="logo-image" src="images/uojai_logo_blue.png" alt="University of Juba Artificial Intelligence">
+        </a>
+      </div>
 
-                    <div class="deeplearning  w-100">
-                        <img  class="banner w-100" src="images/cv_banner.jpg">
-                    </div>
-                    <div class="ml-3 mr-3 mt-3 mb-3 link-group">
-                        <a href="index.html" class="elementor-button elementor-button-orange elementor-button-orange-selected">
-                            <span>Home</span>
-                        </a>
-                        <a href="schedule.html" class="elementor-button elementor-button-orange">
-                            <span>Schedule</span>
-                        </a>
-                        <a href="standing.html" class="elementor-button elementor-button-orange">
-                            <span>Grades</span>
-                        </a>
-                        <a href="contesti.html" class="elementor-button elementor-button-orange">
-                            <span>Contest I</span>
-                        </a>
-                        <a href="contestii.html" class="elementor-button elementor-button-orange">
-                            <span>Contest II</span>
-                        </a>
-                        <a href="contestiii.html" class="elementor-button elementor-button-orange">
-                            <span>Contest III</span>
-                        </a>
-                        <a href="resources.html" class="elementor-button elementor-button-orange">
-                            <span>Resources</span>
-                        </a>
-                    </div>
-                    <div class="ml-3 mr-3">
-                        <p class="text-justify font-italic">
-                            <span class="base mb-0">
+      <div class="course-code">CCS514</div>
+      <h1>Computer Vision</h1>
+      <div class="hero-sub">Final Year Undergraduate Course • Spring 2026</div>
+      <div class="instructor-line">Dr. Felix, Associate Professor of Computer Science</div>
+      <div class="hero-description">
+        Computer vision is everywhere: search, self‑driving cars, medical imaging, drones, and augmented reality. 
+        This course dives deep into modern deep learning architectures for visual recognition tasks such as 
+        image classification, object detection, and segmentation. You will learn to implement and train neural 
+        networks from scratch, understand state‑of‑the‑art research, and apply multi‑million parameter models 
+        to real‑world problems. <em class="class-prerequisites">Prerequisites: Linear algebra, basic probability, and Python programming.</em>
+        <br><br>
 
-                                Delve deeper into the world of computer vision! This advanced
-                                course builds upon your understanding of convolutional neural
-                                networks and propels you into cutting-edge topics. Explore the
-                                power of vision transformers, unlock the potential of generative
-                                AI for creating realistic imagery, and master the fascinating
-                                world of diffusion models.  This course equips you to tackle the
-                                latest advancements in computer vision and push the boundaries of the field.
+      </div>
+      <div class="class-schedule-line">
+        <span><strong>Lectures & Lab:</strong> Tue/Thu 2:00–4:00 pm </span>
+      </div>
 
-                            </span>
-                        </p>
-                    </div>
+      <!-- CNN simulation panels -->
+      <div class="cnn-flow" id="cnnFlow"></div>
+      <div class="input-selector" id="inputSelector">
+        <button class="input-btn" data-class="cat">🐱 Cat</button>
+        <button class="input-btn" data-class="dog">🐶 Dog</button>
+        <button class="input-btn" data-class="car">🚗 Car</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation buttons -->
+  <div class="nav-buttons">
+    <a href="#schedule" class="nav-btn">📅 Schedule</a>
+    <a href="#assignments" class="nav-btn">📝 Assignments</a>
+    <a href="#resources" class="nav-btn">📚 Resources</a>
+    <a href="#staff" class="nav-btn">👥 Staff</a>
+  </div>
+
+  <!-- Weekly Schedule (table directly under heading) -->
+<!--  <section id="schedule">-->
+<!--    <h2>Weekly Schedule</h2>-->
+<!--    <div class="schedule-table">-->
+<!--      <table>-->
+<!--        <thead>-->
+<!--          <tr><th>Week</th><th>Topic</th><th>Readings</th><th>Due</th></tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--          <tr><td>1</td><td>Introduction and Logistics</td><td>Szeliski Ch.1–2</td><td>-</td></tr>-->
+<!--          <tr><td>2</td><td>Image Classification</td><td>Szeliski Ch.3</td><td>HW1 out</td></tr>-->
+<!--          <tr><td>3</td><td>Image Classification cont.</td><td>Szeliski Ch.4</td><td>-</td></tr>-->
+<!--          <tr><td>4</td><td>Object Detection</td><td>Szeliski Ch.5</td><td>HW1 due</td></tr>-->
+<!--          <tr><td>5</td><td>Object Tracking</td><td>Lecture notes</td><td>HW2 out</td></tr>-->
+<!--          <tr><td>6</td><td>Object detection (YOLO, R-CNN)</td><td>Papers</td><td>-</td></tr>-->
+<!--          <tr><td>7</td><td>Segmentation & instance segmentation</td><td>Mask R-CNN</td><td>HW2 due</td></tr>-->
+<!--          <tr><td>8</td><td>Pose Estimation</td><td>-</td><td>Midterm</td></tr>-->
+<!--          <tr><td>9</td><td>Generative models (GANs, diffusion, VLM)</td><td>Additional readings</td><td>Project proposal</td></tr>-->
+<!--          <tr><td>10</td><td>Exams Prep</td><td>Szeliski Ch.11</td><td>-</td></tr>-->
+<!--          <tr><td>11</td><td>Exams</td><td>Optical flow</td><td>HW3 out</td></tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </section>-->
 
 
-                </div>
-            </div>
+  <section id="schedule">
+    <h2>Weekly Schedule</h2>
+    <div class="schedule-table">
+      <table>
+        <thead>
+        <tr><th>Week</th><th>Topic</th><th>Readings (Modern Deep Learning Focus)</th></tr>
+        </thead>
+        <tbody>
+        <tr><td>1</td><td>Introduction & Logistics</td>
+          <td>
+            Foundations of Computer Vision:
+            <a href="https://visionbook.mit.edu/taxonomy.html" target="_blank" rel="noopener">1</a>,
+            <a href="https://visionbook.mit.edu/simplesystem.html" target="_blank" rel="noopener">2</a>,
+            <a href="https://visionbook.mit.edu/visionscience.html" target="_blank" rel="noopener">3</a>
+            <br>
+          </td></tr>
+        <tr><td>2</td><td>Image Classification (Classical & CNN basics)</td><td><a href="http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture3.pdf" target="_blank" rel="noopener">CS231n: Linear classification</a><br><a href="https://arxiv.org/abs/1409.1556" target="_blank" rel="noopener">VGGNet paper (Very Deep CNNs)</a><br><a href="https://arxiv.org/abs/1512.03385" target="_blank" rel="noopener">ResNet paper (Deep Residual Learning)</a></td></tr>
+        <tr><td>3</td><td>Image Classification (Advanced)</td><td><a href="https://arxiv.org/abs/1409.4842" target="_blank" rel="noopener">Going Deeper with GoogLeNet (Inception)</a><br><a href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html" target="_blank" rel="noopener">PyTorch CIFAR-10 tutorial</a></td></tr>
+        <tr><td>4</td><td>Object Detection (Two‑stage)</td><td><a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="noopener">R‑CNN paper</a><br><a href="https://arxiv.org/abs/1504.08083" target="_blank" rel="noopener">Fast R‑CNN</a><br><a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="noopener">Faster R‑CNN</a></td></tr>
+        <tr><td>5</td><td>Object Tracking</td><td><a href="https://arxiv.org/abs/1602.00763" target="_blank" rel="noopener">SORT (Simple Online Realtime Tracking)</a><br><a href="https://arxiv.org/abs/1703.07402" target="_blank" rel="noopener">DeepSORT</a><br><a href="https://arxiv.org/abs/1906.04567" target="_blank" rel="noopener">Trackformer (end‑to‑end tracking)</a></td></tr>
+        <tr><td>6</td><td>Object Detection (One‑stage)</td><td><a href="https://arxiv.org/abs/1506.02640" target="_blank" rel="noopener">YOLOv1 paper</a><br><a href="https://arxiv.org/abs/1612.08242" target="_blank" rel="noopener">YOLOv2 / YOLO9000</a><br><a href="https://arxiv.org/abs/1512.02325" target="_blank" rel="noopener">SSD: Single Shot MultiBox Detector</a></td></tr>
+        <tr><td>7</td><td>Segmentation & Instance Segmentation</td><td><a href="https://arxiv.org/abs/1411.4038" target="_blank" rel="noopener">FCN (Fully Convolutional Networks)</a><br><a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="noopener">Mask R‑CNN</a><br><a href="https://arxiv.org/abs/1802.02611" target="_blank" rel="noopener">DeepLab v3+ (semantic segmentation)</a></td></tr>
+        <tr><td>8</td><td>Pose Estimation</td><td><a href="https://arxiv.org/abs/1812.08008" target="_blank" rel="noopener">OpenPose (bottom‑up)</a><br><a href="https://arxiv.org/abs/1902.09212" target="_blank" rel="noopener">HRNet (high‑resolution networks)</a><br><a href="https://arxiv.org/abs/2103.00020" target="_blank" rel="noopener">ViTPose (vision transformer based)</a></td></tr>
+        <tr><td>9</td><td>Generative Models (GANs, Diffusion, VLMs)</td><td><a href="https://arxiv.org/abs/1406.2661" target="_blank" rel="noopener">GAN paper (Goodfellow)</a><br><a href="https://arxiv.org/abs/2006.11239" target="_blank" rel="noopener">Denoising Diffusion Probabilistic Models (DDPM)</a><br><a href="https://arxiv.org/abs/2103.00020" target="_blank" rel="noopener">CLIP (Vision‑Language Model)</a><br><a href="https://arxiv.org/abs/2112.10752" target="_blank" rel="noopener">Stable Diffusion (latent diffusion)</a></td></tr>
+        <tr><td>10</td><td>Exams Prep & 3D Vision</td><td><a href="https://arxiv.org/abs/2006.11239" target="_blank" rel="noopener">Diffusion models (review)</a><br><a href="https://arxiv.org/abs/1701.08288" target="_blank" rel="noopener">Stereo matching with deep learning</a></td></tr>
+        <tr><td>11</td><td>Exams & Optical Flow</td><td><a href="https://arxiv.org/abs/1504.06852" target="_blank" rel="noopener">FlowNet (optical flow with CNNs)</a><br><a href="https://arxiv.org/abs/1902.04103" target="_blank" rel="noopener">RAFT (Recurrent All‑Pairs Field Transforms)</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Assignments -->
+  <section id="assignments">
+    <h2>Assignments</h2>
+    <div class="assignments-grid">
+      <div class="assignment-item"><strong>Assignment 1: Introduction</strong><br>Due June 9th, 2026 – <a href="https://forms.gle/dgksYAvdfENDxZZe6">Click here to complete</a></div>
+    </div>
+  </section>
+
+  <!-- Grading Policy Section -->
+  <section id="grading">
+    <h2>Grading Policy</h2>
+    <div class="grading-card">
+      <div class="grading-breakdown">
+        <div class="grading-item">
+          <div class="percentage">20%</div>
+          <div class="label">Assignments</div>
         </div>
-    </section>
-    <section>
-        <div class="d-flex mx-lg-0">
-            <div class="w-100 ml-5 mr-5 mt-3">
-                <div class="depth-lg-none bg-lg-transparent bg-lg-transparent depth-lg-none">
-                    <div class="rowex row-cols-1 row-cols-md-1 w-100 bg-light-gray rounded-t"></div>
-                    <div class="rowex row-cols-1 row-cols-md-2 w-100 bg-light-gray">
-                        <div class="col mb-5 mb-md-0 w-100">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body">
-                                        <img class="staff-image-primary" src="images/felix_ai.jpg" alt="felix"><br>
-<!--                                        <span class="cool-title">Instructor</span><br>-->
-                                        <a href="https://www.felixgonda.com">Dr. Felix Gonda</a><br>
-
-                                        <p class="px-0  small font-italic text-center">
-                                            Assistant Professor, Computer Science<br>
-                                            E-mail: <span class="text-blue">uojdeeplearning@gmail.com</span><br>
-                                            Meeting: <span class="text-orange">send an email to schedule a meeting</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col mb-5 mb-md-1 w-100">
-
-                            <table class="course-info-table">
-                                <tr>
-                                    <td class="course-info-textbook">
-                                        <img onclick="GotoPage('https://github.com/PacktPublishing/Hands-On-Computer-Vision-with-TensorFlow-2')" class="mt-0 textbook-card w-300" src="images/book.png">
-                                        <p class="px-0 text-left small font-italic">
-                                            Click image to access book
-                                        </p>
-
-                                    </td>
-                                    <td>
-                                        <div class="card-body">
-                                            <p class="px-0 text-left small">
-                                                <strong>Core Session</strong> (@ UoJ Computer Lab)<br>
-                                                Lecture:  Tuesday 2:00-3:00 pm<br>
-                                                Laboratory:  Tuesday 3:00-4:00 pm
-                                            </p>
-                                            <p class="px-0 text-left small">
-                                                <strong>Innovation Session</strong> (@ UoJ Computer Lab)<br>
-                                                Lecture:  Thursday 2:00-3:00 pm<br>
-                                                Laboratory:  Thursday 3:00-4:00 pm
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </div>
-                    </div>
-                    <div class="rowex row-cols-1 row-cols-md-1 w-100 bg-light-gray rounded-b">
-<!--                        <div class="col mb-5 mb-md-0 w-100">-->
-<!--                            <div class="w-100 bg-white session-item-line-gray"></div>-->
-<!--                        </div>-->
-                    </div>
-                </div>
-            </div>
+        <div class="grading-item">
+          <div class="percentage">10%</div>
+          <div class="label">Project</div>
         </div>
-
-    </section>
-    <section>
-        <div class="d-flex mx-lg-0">
-            <div class="w-100 ml-5 mr-5 mt-5">
-                <div class="depth-lg-none bg-lg-transparent bg-lg-transparent depth-lg-none">
-                    <div class="rowex row-cols-1 row-cols-md-1 w-100">
-                        Teaching Fellows
-                    </div>
-                </div>
-            </div>
+        <div class="grading-item">
+          <div class="percentage">70%</div>
+          <div class="label">Final Exam</div>
         </div>
-    </section>
-    <section>
-        <div class="d-flex mx-lg-0">
-            <div class="w-100 ml-5 mr-5 mt-3">
-                <div class="depth-lg-none bg-lg-transparent bg-lg-transparent depth-lg-none">
-                    <div class="rowex row-cols-12 row-cols-md-12 w-100 bg-light-gray">
+      </div>
+      <div class="grading-note">
+        📌 <em>All assignments must be submitted on time. Late submissions incur a 10% penalty per day. The final project includes a written report, code, and a short presentation.</em>
+      </div>
+    </div>
+  </section>
 
-                        <div class="col mb-2 mb-md-2">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body">
-                                        <img class="tf-image-primary abc-blue" src="images/james.jpg" alt="James"><br>
-                                        <p class="px-0 text-center small">
-                                            <a href="http://www.linkedin.com/in/james-anyieth-yuot-07402232a">James Anyieth</a><br>
-                                            (<span class="extra-small">Head TF</span>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-<!--                        <div class="col mb-2 mb-md-1">-->
-<!--                            <div class="bg-light-gray pb-3">-->
-<!--                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">-->
-<!--                                    <div class="card-body">-->
-<!--                                        <img class="tf-image-primary" src="images/omon.jpg" alt="Omon"><br>-->
-<!--                                        <p class="px-0 text-center small">-->
-<!--                                            <a href="https://www.linkedin.com/in/felixomon">Felix Omon</a><br>-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body">
-                                        <img class="tf-image-primary abc-green" src="images/thiong.jpg" alt="Thiong"><br>
-                                        <p class="px-0 text-center small">
-                                            <a href="https://www.linkedin.com/in/thiong-abraham-a7281631b">Thiong Abraham</a><br>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-2">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body">
-                                        <img class="tf-image-primary" src="images/modi.jpg" alt="Modi"><br>
-                                        <p class="px-0 text-center small">
-                                            <a href="https://www.linkedin.com/in/hacks-pro/">Modi Dennis</a><br>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-2">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body">
-                                        <img class="tf-image-primary" src="images/nyalimo.jpg" alt="Nyalimo"><br>
-                                        <p class="px-0 text-center small">
-                                            <a href="https://www.linkedin.com/in/nyalimo-wani-623193278/">James Nyalimo</a><br>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <!-- Resources -->
+  <section id="resources">
+    <h2>Resources</h2>
+    <div class="resources-card">
+      <ul>
+        <li>Keras: <a href="https://keras.io/">https://keras.io/</a></li>
+        <li>Tensorflow: <a href="https://www.tensorflow.org/tutorials/quickstart/beginner">TensorFlow quick start</a></li>
+        <li><a href="https://visionbook.mit.edu/">Foundations of Computer Vision</a></li>
+        <li><a href="https://teachablemachine.withgoogle.com/">Teachable Machine</a></li>
+      </ul>
+    </div>
+  </section>
 
-                        <div class="col mb-5 mb-md-1 w-100">
-                        </div>
-                    </div>
-                    <div class="rowex row-cols-1 row-cols-md-1 w-100 bg-light-gray rounded-b">
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- Staff Team -->
+  <div class="staff-section" id="staff">
+    <h2>Meet the Team</h2>
+    <div class="staff-grid">
+      <div class="staff-card"><img class="staff-photo" src="images/felix_ai.jpg" alt="Dr. Felix Gonda"><div class="staff-name">Dr. Felix Gonda</div><div class="staff-role">Associate Professor, CS</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/KuotChol.jpg" alt="Kuot Chol"><div class="staff-name">Kuot Chol</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/nesnea.jpg" alt="Nesnea Khadi"><div class="staff-name">Nesnea Khadi</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/reeng.jpg" alt="Reeng Kuol"><div class="staff-name">Reeng Kuol</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/ayath.jpg" alt="Ayath Agani"><div class="staff-name">Ayath Agani</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/adam.jpg" alt="Adam Juma"><div class="staff-name">Adam Juma</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/ngor.jpg" alt="Ngor Wek Wek"><div class="staff-name">Ngor Wek Wek</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/emmanuel.jpg" alt="Emmanuel Deng"><div class="staff-name">Emmanuel Deng</div><div class="staff-role">Teaching Fellow</div></div>
+    </div>
+  </div>
 
-    </section>
-
-
-    <section>
-        <div class="azure-footer aem-GridColumn aem-GridColumn--default--12">
-            <footer id="azure-footer" class="azure-footer-nav acom-nav-service en-us" data-module="footer">
-                <span>© University of Juba 2025</span>
-            </footer>
-        </div>
-    </section>
+  <footer>
+    © 2026 Computer Vision (CCS514) – University of Juba
+  </footer>
 </div>
 
-<script type="text/javascript" src="index.js"></script>
+<script>
+  (function() {
+    const panelSize = 70;
+    let currentClass = "cat";
+
+    // Input drawings (cat, dog, car)
+    function drawCat(ctx, w, h) {
+      ctx.fillStyle = "#0f172a"; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle = "#3b82f6";
+      ctx.beginPath(); ctx.arc(w/2, h/2, w*0.25, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = "white";
+      ctx.beginPath(); ctx.arc(w*0.35, h*0.4, 4, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(w*0.65, h*0.4, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = "#facc15";
+      ctx.beginPath(); ctx.moveTo(w*0.5, h*0.55); ctx.lineTo(w*0.45, h*0.65); ctx.lineTo(w*0.55, h*0.65); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(w*0.3, h*0.3); ctx.lineTo(w*0.2, h*0.2); ctx.lineTo(w*0.25, h*0.35); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(w*0.7, h*0.3); ctx.lineTo(w*0.8, h*0.2); ctx.lineTo(w*0.75, h*0.35); ctx.fill();
+    }
+    function drawDog(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle="#f59e0b"; ctx.beginPath(); ctx.arc(w/2,h/2,w*0.25,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle="white"; ctx.beginPath(); ctx.arc(w*0.35,h*0.4,4,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(w*0.65,h*0.4,4,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle="#1e293b"; ctx.beginPath(); ctx.ellipse(w*0.5,h*0.6,8,5,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(w*0.3,h*0.25); ctx.lineTo(w*0.2,h*0.15); ctx.lineTo(w*0.25,h*0.3); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(w*0.7,h*0.25); ctx.lineTo(w*0.8,h*0.15); ctx.lineTo(w*0.75,h*0.3); ctx.fill();
+    }
+    function drawCar(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle="#ef4444"; ctx.fillRect(w*0.2,h*0.5,w*0.6,h*0.3);
+      ctx.fillStyle="#1e293b"; ctx.fillRect(w*0.25,h*0.45,w*0.5,h*0.1);
+      ctx.fillStyle="#111827"; ctx.beginPath(); ctx.arc(w*0.3,h*0.75,7,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(w*0.7,h*0.75,7,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle="#facc15"; ctx.fillRect(w*0.45,h*0.55,6,10);
+    }
+    function getInputDraw(cls) { return cls==="cat"?drawCat:(cls==="dog"?drawDog:drawCar); }
+    function getProbs(cls) { return cls==="cat"?[0.85,0.10,0.05]:(cls==="dog"?[0.12,0.82,0.06]:[0.05,0.08,0.87]); }
+
+    // fixed layer drawings
+    function drawConvRelu(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      for(let i=0;i<80;i++){ let x=4+Math.random()*(w-8), y=4+Math.random()*(h-8); ctx.fillStyle=`rgba(59,130,246,${0.3+Math.random()*0.5})`; ctx.beginPath(); ctx.arc(x,y,1.5,0,Math.PI*2); ctx.fill(); }
+      ctx.beginPath(); ctx.moveTo(w*0.2,h*0.2); ctx.lineTo(w*0.8,h*0.8); ctx.strokeStyle="#facc15"; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w*0.8,h*0.2); ctx.lineTo(w*0.2,h*0.8); ctx.stroke();
+    }
+    function drawMaxPool(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      let cells=6, cellW=w/cells, cellH=h/cells;
+      for(let i=0;i<cells;i++) for(let j=0;j<cells;j++) { let bright=80+Math.floor(Math.random()*120); ctx.fillStyle=`rgb(${bright},${bright-40},200)`; ctx.fillRect(i*cellW,j*cellH,cellW-1,cellH-1); }
+    }
+    function drawFC(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      ctx.strokeStyle="#3b82f6"; ctx.lineWidth=1;
+      for(let i=0;i<5;i++){ let x=8+i*12, y=h/2; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fillStyle="#3b82f6"; ctx.fill(); if(i>0){ ctx.beginPath(); ctx.moveTo(x-8,y); ctx.lineTo(x-3,y); ctx.stroke(); } }
+      ctx.fillStyle="#facc15"; ctx.font="bold 7px system-ui"; ctx.fillText("FC",w-15,h/2+3);
+    }
+    function drawOutput(ctx,w,h,probs) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      let classes=["Cat","Dog","Car"], barWidth=(w-10)/3-3;
+      for(let i=0;i<3;i++){ let barHeight=probs[i]*(h-18); ctx.fillStyle="#3b82f6"; ctx.fillRect(5+i*(barWidth+4),h-10-barHeight,barWidth-2,barHeight); ctx.fillStyle="#cbd5e1"; ctx.font="6px system-ui"; ctx.fillText(classes[i],6+i*(barWidth+4),h-2); ctx.fillStyle="#facc15"; ctx.fillText(`${Math.round(probs[i]*100)}%`,8+i*(barWidth+4),h-12-barHeight); }
+      ctx.fillStyle="white"; ctx.font="bold 6px system-ui"; let topClass=classes[probs.indexOf(Math.max(...probs))]; ctx.fillText(`${topClass} ${Math.round(Math.max(...probs)*100)}%`,w/2-15,8);
+    }
+
+    const container=document.getElementById("cnnFlow");
+    let panels=[];
+    function buildPanels(){
+      container.innerHTML=""; panels=[];
+      const defs=[
+        { label:"Input", isInput:true },
+        { label:"Conv+ReLU", draw:drawConvRelu },
+        { label:"MaxPool", draw:drawMaxPool },
+        { label:"Fully Connected", draw:drawFC },
+        { label:"Output", isOutput:true }
+      ];
+      defs.forEach((def,idx)=>{
+        let panelDiv=document.createElement("div"); panelDiv.className="flow-panel";
+        let canvas=document.createElement("canvas"); canvas.width=panelSize; canvas.height=panelSize; canvas.style.width=`${panelSize}px`; canvas.style.height=`${panelSize}px`;
+        let ctx=canvas.getContext("2d");
+        let labelSpan=document.createElement("div"); labelSpan.className="flow-label"; labelSpan.innerText=def.label;
+        panelDiv.appendChild(canvas); panelDiv.appendChild(labelSpan); container.appendChild(panelDiv);
+        panels.push({canvas,ctx,def});
+        if(idx<defs.length-1){ let arrowSpan=document.createElement("span"); arrowSpan.className="arrow"; arrowSpan.innerText="→"; container.appendChild(arrowSpan); }
+      });
+    }
+    function updateSimulation(cls){
+      let probs=getProbs(cls), inputDraw=getInputDraw(cls);
+      panels.forEach(p=>{ if(p.def.isInput) inputDraw(p.ctx,panelSize,panelSize); else if(p.def.isOutput) drawOutput(p.ctx,panelSize,panelSize,probs); else if(p.def.draw) p.def.draw(p.ctx,panelSize,panelSize); });
+    }
+    buildPanels(); updateSimulation("cat");
+    document.querySelectorAll(".input-btn").forEach(btn=>{ btn.addEventListener("click",e=>{ currentClass=e.currentTarget.getAttribute("data-class"); updateSimulation(currentClass); }); });
+  })();
+</script>
 </body>
 </html>
