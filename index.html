@@ -127,27 +127,33 @@
       font-size: small;
     }
 
-    /* CNN simulation panels */
+    /* ===== CNN FLOW ===== */
     .cnn-flow {
       margin-top: 2rem;
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
+      align-items: stretch;
       justify-content: flex-start;
       gap: 0.6rem;
       row-gap: 1rem;
       background: rgba(0,0,0,0.2);
-      padding: 1rem 1rem 0.8rem 1rem;
+      padding: 1rem;
       border-radius: 1.25rem;
+      overflow-x: auto;
     }
 
     .flow-panel {
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       text-align: center;
       background: rgba(255,255,255,0.06);
       backdrop-filter: blur(4px);
       border-radius: 0.9rem;
-      padding: 0.5rem 0.3rem;
+      padding: 0.4rem 0.3rem;
       transition: transform 0.2s, background 0.2s;
+      flex-shrink: 0;
     }
     .flow-panel:hover {
       background: rgba(255,255,255,0.12);
@@ -162,7 +168,7 @@
     }
     .flow-label {
       font-size: 0.65rem;
-      margin-top: 0.4rem;
+      margin-top: 0.3rem;
       font-weight: 500;
       color: #cbd5e6;
     }
@@ -171,30 +177,56 @@
       color: #60a5fa;
       font-weight: 600;
       margin: 0 0.1rem;
+      flex-shrink: 0;
+      align-self: center;
     }
 
-    .input-selector {
-      margin-top: 1rem;
+    /* Vertical selector panel */
+    .selector-vertical {
       display: flex;
-      gap: 0.8rem;
-      justify-content: flex-start;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .selector-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 2rem;
+      padding: 0.1rem 0.4rem 0.1rem 0.6rem;
     }
     .input-btn {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
       color: white;
-      padding: 0.3rem 1rem;
+      padding: 0.2rem 0.6rem;
       border-radius: 2rem;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
+      white-space: nowrap;
     }
     .input-btn:hover {
       background: #3b82f6;
       border-color: #3b82f6;
       transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(59,130,246,0.3);
+    }
+    .input-btn.active {
+      background: #63A5FA;
+      border-color: #63A5FA;
+      color: #0f172a;
+      box-shadow: 0 0 6px #63A5FA;
+    }
+    .selector-arrow {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #4a5568;
+      transition: color 0.2s;
+    }
+    .selector-row.active-arrow .selector-arrow {
+      color: #63A5FA;
     }
 
     /* Navigation buttons */
@@ -280,6 +312,21 @@
       box-shadow: 0 6px 14px rgba(0,0,0,0.05);
     }
     .assignment-item strong {
+      font-size: 1rem;
+    }
+    .laboratory-item {
+      background: white;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1rem;
+      border-left: 5px solid #edae19;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+    }
+    .laboratory-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    }
+    .laboratory-item strong {
       font-size: 1rem;
     }
 
@@ -530,7 +577,7 @@
         <tr><th>Week</th><th>Topic</th><th>Readings (Modern Deep Learning Focus)</th></tr>
         </thead>
         <tbody>
-        <tr><td>1</td><td>Introduction & Logistics</td>
+        <tr><td>1</td><td>Introduction & Logistics (<a href="https://drive.google.com/file/d/1oRpJOccJtjrNiwkrkcDuIfGk4bHBsGSp/view?usp=sharing">Slides</a>)</td>
           <td>
             Foundations of Computer Vision:
             <a href="https://visionbook.mit.edu/taxonomy.html" target="_blank" rel="noopener">1</a>,
@@ -558,6 +605,9 @@
     <h2>Assignments</h2>
     <div class="assignments-grid">
       <div class="assignment-item"><strong>Assignment 1: Introduction</strong><br>Due June 9th, 2026 – <a href="https://forms.gle/dgksYAvdfENDxZZe6">Click here to complete</a></div>
+      <div class="laboratory-item">
+        <strong>Laboratory 1: Video Manipulation</strong><br>Due June 11th, 2026 – <a href="https://colab.research.google.com/drive/1MkDgmQAZQM_lVDlF8I8C1TlfxSx6DPY1?usp=sharing">Click here to complete</a> - <a href="https://forms.gle/rrDsrHhJ7bzUkBmw7">Click here to submit</a> - Solution: TBD
+      </div>
     </div>
   </section>
 
@@ -623,7 +673,7 @@
     const panelSize = 70;
     let currentClass = "cat";
 
-    // Input drawings (cat, dog, car)
+    // Drawing functions (unchanged)
     function drawCat(ctx, w, h) {
       ctx.fillStyle = "#0f172a"; ctx.fillRect(0,0,w,h);
       ctx.fillStyle = "#3b82f6";
@@ -651,10 +701,16 @@
       ctx.fillStyle="#111827"; ctx.beginPath(); ctx.arc(w*0.3,h*0.75,7,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(w*0.7,h*0.75,7,0,Math.PI*2); ctx.fill();
       ctx.fillStyle="#facc15"; ctx.fillRect(w*0.45,h*0.55,6,10);
     }
-    function getInputDraw(cls) { return cls==="cat"?drawCat:(cls==="dog"?drawDog:drawCar); }
-    function getProbs(cls) { return cls==="cat"?[0.85,0.10,0.05]:(cls==="dog"?[0.12,0.82,0.06]:[0.05,0.08,0.87]); }
-
-    // fixed layer drawings
+    function getInputDraw(cls) {
+      if (cls === "cat") return drawCat;
+      if (cls === "dog") return drawDog;
+      return drawCar;
+    }
+    function getProbs(cls) {
+      if (cls === "cat") return [0.85, 0.10, 0.05];
+      if (cls === "dog") return [0.12, 0.82, 0.06];
+      return [0.05, 0.08, 0.87];
+    }
     function drawConvRelu(ctx,w,h) {
       ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
       for(let i=0;i<80;i++){ let x=4+Math.random()*(w-8), y=4+Math.random()*(h-8); ctx.fillStyle=`rgba(59,130,246,${0.3+Math.random()*0.5})`; ctx.beginPath(); ctx.arc(x,y,1.5,0,Math.PI*2); ctx.fill(); }
@@ -679,33 +735,154 @@
       ctx.fillStyle="white"; ctx.font="bold 6px system-ui"; let topClass=classes[probs.indexOf(Math.max(...probs))]; ctx.fillText(`${topClass} ${Math.round(Math.max(...probs)*100)}%`,w/2-15,8);
     }
 
-    const container=document.getElementById("cnnFlow");
-    let panels=[];
-    function buildPanels(){
-      container.innerHTML=""; panels=[];
-      const defs=[
-        { label:"Input", isInput:true },
-        { label:"Conv+ReLU", draw:drawConvRelu },
-        { label:"MaxPool", draw:drawMaxPool },
-        { label:"Fully Connected", draw:drawFC },
-        { label:"Output", isOutput:true }
-      ];
-      defs.forEach((def,idx)=>{
-        let panelDiv=document.createElement("div"); panelDiv.className="flow-panel";
-        let canvas=document.createElement("canvas"); canvas.width=panelSize; canvas.height=panelSize; canvas.style.width=`${panelSize}px`; canvas.style.height=`${panelSize}px`;
-        let ctx=canvas.getContext("2d");
-        let labelSpan=document.createElement("div"); labelSpan.className="flow-label"; labelSpan.innerText=def.label;
-        panelDiv.appendChild(canvas); panelDiv.appendChild(labelSpan); container.appendChild(panelDiv);
-        panels.push({canvas,ctx,def});
-        if(idx<defs.length-1){ let arrowSpan=document.createElement("span"); arrowSpan.className="arrow"; arrowSpan.innerText="→"; container.appendChild(arrowSpan); }
+    const container = document.getElementById("cnnFlow");
+    container.innerHTML = "";
+
+    function createStaticPanel(label, drawFunc) {
+      const div = document.createElement("div");
+      div.className = "flow-panel";
+      const canvas = document.createElement("canvas");
+      canvas.width = panelSize;
+      canvas.height = panelSize;
+      canvas.style.width = `${panelSize}px`;
+      canvas.style.height = `${panelSize}px`;
+      const ctx = canvas.getContext("2d");
+      drawFunc(ctx, panelSize, panelSize);
+      div.appendChild(canvas);
+      const lbl = document.createElement("div");
+      lbl.className = "flow-label";
+      lbl.innerText = label;
+      div.appendChild(lbl);
+      return div;
+    }
+
+    // 1) Vertical selector panel
+    const selectorPanel = document.createElement("div");
+    selectorPanel.className = "flow-panel";
+    const verticalDiv = document.createElement("div");
+    verticalDiv.className = "selector-vertical";
+
+    // Helper to update UI based on selected class
+    function updateSelection(selectedClass) {
+      // Update button active states and row arrow colors
+      document.querySelectorAll(".selector-row").forEach(row => {
+        const btn = row.querySelector(".input-btn");
+        const arrow = row.querySelector(".selector-arrow");
+        if (btn.dataset.class === selectedClass) {
+          btn.classList.add("active");
+          row.classList.add("active-arrow");
+        } else {
+          btn.classList.remove("active");
+          row.classList.remove("active-arrow");
+        }
       });
+      // Update input image and output probabilities
+      const inputCtx = inputCanvas.getContext("2d");
+      const inputDraw = getInputDraw(selectedClass);
+      inputDraw(inputCtx, panelSize, panelSize);
+      const probs = getProbs(selectedClass);
+      const outputCtx = outputCanvas.getContext("2d");
+      drawOutput(outputCtx, panelSize, panelSize, probs);
     }
-    function updateSimulation(cls){
-      let probs=getProbs(cls), inputDraw=getInputDraw(cls);
-      panels.forEach(p=>{ if(p.def.isInput) inputDraw(p.ctx,panelSize,panelSize); else if(p.def.isOutput) drawOutput(p.ctx,panelSize,panelSize,probs); else if(p.def.draw) p.def.draw(p.ctx,panelSize,panelSize); });
+
+    function makeSelectorRow(label, cls) {
+      const row = document.createElement("div");
+      row.className = "selector-row";
+      const btn = document.createElement("button");
+      btn.textContent = label;
+      btn.className = "input-btn";
+      btn.dataset.class = cls;
+      const arrowSpan = document.createElement("span");
+      arrowSpan.className = "selector-arrow";
+      arrowSpan.textContent = "→";
+      row.appendChild(btn);
+      row.appendChild(arrowSpan);
+
+      btn.addEventListener("click", () => {
+        if (currentClass === cls) return;
+        currentClass = cls;
+        updateSelection(currentClass);
+      });
+      return row;
     }
-    buildPanels(); updateSimulation("cat");
-    document.querySelectorAll(".input-btn").forEach(btn=>{ btn.addEventListener("click",e=>{ currentClass=e.currentTarget.getAttribute("data-class"); updateSimulation(currentClass); }); });
+
+    verticalDiv.appendChild(makeSelectorRow("🐱 Cat", "cat"));
+    verticalDiv.appendChild(makeSelectorRow("🐶 Dog", "dog"));
+    verticalDiv.appendChild(makeSelectorRow("🚗 Car", "car"));
+    selectorPanel.appendChild(verticalDiv);
+    const selectorLabel = document.createElement("div");
+    selectorLabel.className = "flow-label";
+    selectorLabel.innerText = "Select Input";
+    selectorPanel.appendChild(selectorLabel);
+    container.appendChild(selectorPanel);
+
+    // Arrow after selector
+    const arrow0 = document.createElement("span");
+    arrow0.className = "arrow";
+    arrow0.textContent = "→";
+    container.appendChild(arrow0);
+
+    // 2) Input panel
+    const inputPanelDiv = document.createElement("div");
+    inputPanelDiv.className = "flow-panel";
+    const inputCanvas = document.createElement("canvas");
+    inputCanvas.width = panelSize;
+    inputCanvas.height = panelSize;
+    inputCanvas.style.width = `${panelSize}px`;
+    inputCanvas.style.height = `${panelSize}px`;
+    inputPanelDiv.appendChild(inputCanvas);
+    const inputLabelDiv = document.createElement("div");
+    inputLabelDiv.className = "flow-label";
+    inputLabelDiv.innerText = "Input Image";
+    inputPanelDiv.appendChild(inputLabelDiv);
+    container.appendChild(inputPanelDiv);
+
+    const arrow1 = document.createElement("span");
+    arrow1.className = "arrow";
+    arrow1.textContent = "→";
+    container.appendChild(arrow1);
+
+    // 3) Conv+ReLU
+    const convPanel = createStaticPanel("Conv+ReLU", drawConvRelu);
+    container.appendChild(convPanel);
+    const arrow2 = document.createElement("span");
+    arrow2.className = "arrow";
+    arrow2.textContent = "→";
+    container.appendChild(arrow2);
+
+    // 4) MaxPool
+    const poolPanel = createStaticPanel("MaxPool", drawMaxPool);
+    container.appendChild(poolPanel);
+    const arrow3 = document.createElement("span");
+    arrow3.className = "arrow";
+    arrow3.textContent = "→";
+    container.appendChild(arrow3);
+
+    // 5) Fully Connected
+    const fcPanel = createStaticPanel("Fully Connected", drawFC);
+    container.appendChild(fcPanel);
+    const arrow4 = document.createElement("span");
+    arrow4.className = "arrow";
+    arrow4.textContent = "→";
+    container.appendChild(arrow4);
+
+    // 6) Output panel
+    const outputPanelDiv = document.createElement("div");
+    outputPanelDiv.className = "flow-panel";
+    const outputCanvas = document.createElement("canvas");
+    outputCanvas.width = panelSize;
+    outputCanvas.height = panelSize;
+    outputCanvas.style.width = `${panelSize}px`;
+    outputCanvas.style.height = `${panelSize}px`;
+    outputPanelDiv.appendChild(outputCanvas);
+    const outputLabelDiv = document.createElement("div");
+    outputLabelDiv.className = "flow-label";
+    outputLabelDiv.innerText = "Output (3 classes)";
+    outputPanelDiv.appendChild(outputLabelDiv);
+    container.appendChild(outputPanelDiv);
+
+    // Initial selection: cat
+    updateSelection("cat");
   })();
 </script>
 </body>
