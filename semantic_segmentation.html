@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Semantic Segmentation Annotation Lab</title>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcfcfc; color: #333; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+
+    /* Unified Container Widths */
+    header, .main-container { width: 100%; max-width: 800px; }
+
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f1f5f9;
+      border-radius: 1.75rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+
+    a {
+      color: #f1f5f9;
+      text-decoration: none;
+    }
+    .hero-text {
+      max-width: 100%;
+      text-align: left;
+    }
+
+    /* Logo wrapper: centers the inline-block link */
+    .logo-wrapper {
+      text-align: center;
+      /*margin-bottom: 1.25rem;*/
+    }
+    .university-logo {
+      display: inline-block;   /* only as wide as the image */
+      transition: transform 0.2s ease;
+    }
+    .university-logo:hover {
+      transform: scale(1.1);
+    }
+    .logo-image {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      transition: filter 0.2s;
+    }
+    .university-logo:hover .logo-image {
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.25));
+    }
+
+    .hero-text h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, #cbd5e1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-description {
+      margin-top: 1.2rem;
+      font-size: 0.8rem;
+      line-height: 1.65;
+      opacity: 0.92;
+      /*max-width: 85%;*/
+    }
+    .course-code {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      padding: 0.25rem 0.9rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      /*margin-bottom: 0.75rem;*/
+      border: 0.5px solid rgba(255,255,255,0.2);
+    }
+    .description { font-size: 0.95rem; color: #cbd5e1; margin-top: 10px; }
+
+    .main-container { display: flex; gap: 40px; align-items: flex-start; background: #f1f5f9; padding: 30px; border: 1px solid #eee; border-radius: 1.75rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .toolbar { width: 200px; flex-shrink: 0; }
+    .swatch-row { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 10px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent;}
+    .swatch-row.active { background: #f0f4ff; border-color: #c7d2fe; }
+    .swatch { width: 24px; height: 24px; border-radius: 4px; border: 1px solid #ddd; }
+
+    canvas { background: black; border: 1px solid #e5e7eb; border-radius: 4px; cursor: crosshair; }
+    button { background: #129cf6; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 500; margin-top: 20px; }
+    button:hover { background: #444; }
+  </style>
+</head>
+<body>
+
+<header>
+  <!--<h2>Semantic Segmentation Annotation</h2>
+  <p class="description">
+    Semantic segmentation requires precise pixel-level classification to generate ground truth labels. In this lab, you are tasked with interpreting the geometric boundaries of objects and assigning them to their respective semantic classes. By manually filling these regions, you will create the binary or multi-class masks required to train deep U-Net architectures.
+  </p>
+  -->
+  <div class="hero-text">
+    <!-- Logo wrapper centers the inline-block link -->
+    <div class="logo-wrapper">
+      <a href="https://uojai.github.io/" target="_self" class="university-logo">
+        <img class="logo-image" src="images/uojai_logo_blue.png" alt="University of Juba Artificial Intelligence">
+      </a>
+    </div>
+    <div class="course-code"><a href="index.html">CCS514</a></div>
+    <h1>Semantic Segmentation Annotation</h1>
+    <div class="hero-description">
+      Semantic segmentation requires precise pixel-level classification to generate ground truth labels. In this lab, you are tasked with interpreting the geometric boundaries of objects and assigning them to their respective semantic classes. By manually filling these regions, you will create the binary or multi-class masks required to train deep U-Net architectures.
+    </div>
+  </div>
+
+
+</header>
+
+<div class="main-container">
+  <aside class="toolbar">
+    <strong>Labels</strong>
+    <div class="swatch-row active" onclick="select(0, this, '#000000')">
+      <div class="swatch" style="background:#000000"></div> <span>0: Background</span>
+    </div>
+    <div class="swatch-row" onclick="select(1, this, 'red')">
+      <div class="swatch" style="background:red"></div> <span>1: Circle</span>
+    </div>
+    <div class="swatch-row" onclick="select(2, this, 'blue')">
+      <div class="swatch" style="background:blue"></div> <span>2: Square</span>
+    </div>
+    <hr style="border:0; border-top:1px solid #eee; margin: 15px 0;">
+    <div class="swatch-row" onclick="select(0, this, '#000000')">
+      <div class="swatch" style="background:white; border: 1px dashed #333;"></div> <span>Eraser</span>
+    </div>
+    <label style="display:block; margin-top:15px;"><small>Brush Size</small></label>
+    <input type="range" min="5" max="50" value="20" onchange="brushSize=this.value" style="width:100%;">
+    <button onclick="save()" style="width:100%">Download Mask</button>
+  </aside>
+
+  <canvas id="canvas" width="512" height="512"></canvas>
+</div>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let painting = false, color = '#000000', brushSize = 20;
+
+  function init() {
+    ctx.fillStyle = "#000000"; ctx.fillRect(0,0,512,512);
+    ctx.lineWidth = 3; ctx.strokeStyle = '#000';
+
+    const drawShape = (type, x, y, size) => {
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      if(type === 'circle') ctx.arc(x, y, size, 0, Math.PI*2);
+      else ctx.rect(x-size, y-size, size*2, size*2);
+      ctx.fill(); ctx.stroke();
+    };
+
+    drawShape('circle', 120, 150, 45); drawShape('circle', 400, 150, 45);
+    drawShape('square', 280, 250, 45); drawShape('square', 100, 350, 45);
+  }
+  init();
+
+  function select(id, el, c) {
+    document.querySelectorAll('.swatch-row').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+    color = c;
+  }
+
+  canvas.onmousedown = () => painting = true;
+  canvas.onmouseup = () => { painting = false; ctx.beginPath(); };
+  canvas.onmousemove = (e) => {
+    if (!painting) return;
+    const rect = canvas.getBoundingClientRect();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(e.clientX - rect.left, e.clientY - rect.top, brushSize/2, 0, Math.PI*2);
+    ctx.fill();
+  };
+
+  function save() {
+    const link = document.createElement('a');
+    link.download = 'mask.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  }
+</script>
+</body>
+</html>
