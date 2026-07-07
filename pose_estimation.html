@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instance Segmentation Annotation Lab</title>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcfcfc; color: #333; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+
+    /* Unified Container Widths */
+    header, .main-container { width: 100%; max-width: 800px; }
+
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f1f5f9;
+      border-radius: 1.75rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+
+    a {
+      color: #f1f5f9;
+      text-decoration: none;
+    }
+    .hero-text {
+      max-width: 100%;
+      text-align: left;
+    }
+
+    /* Logo wrapper: centers the inline-block link */
+    .logo-wrapper {
+      text-align: center;
+      /*margin-bottom: 1.25rem;*/
+    }
+    .university-logo {
+      display: inline-block;   /* only as wide as the image */
+      transition: transform 0.2s ease;
+    }
+    .university-logo:hover {
+      transform: scale(1.1);
+    }
+    .logo-image {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      transition: filter 0.2s;
+    }
+    .university-logo:hover .logo-image {
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.25));
+    }
+
+    .hero-text h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, #cbd5e1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-description {
+      margin-top: 1.2rem;
+      font-size: 0.8rem;
+      line-height: 1.65;
+      opacity: 0.92;
+      /*max-width: 85%;*/
+    }
+    .course-code {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      padding: 0.25rem 0.9rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      /*margin-bottom: 0.75rem;*/
+      border: 0.5px solid rgba(255,255,255,0.2);
+    }
+
+    .main-container { display: flex; gap: 40px; align-items: flex-start; background: #f1f5f9; padding: 30px; border: 1px solid #eee; border-radius: 1.75rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .swatch-row { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 10px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent;}
+    .swatch-row.active { background: #f0f4ff; border-color: #c7d2fe; }
+    .swatch { width: 24px; height: 24px; border-radius: 4px; border: 1px solid #ddd; }
+    canvas { background: black; border: 1px solid #e5e7eb; border-radius: 4px; cursor: crosshair; }
+    button { background: #129cf6; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 500; margin-top: 20px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="hero-text">
+    <!-- Logo wrapper centers the inline-block link -->
+    <div class="logo-wrapper">
+      <a href="https://uojai.github.io/" target="_self" class="university-logo">
+        <img class="logo-image" src="images/uojai_logo_blue.png" alt="University of Juba Artificial Intelligence">
+      </a>
+    </div>
+    <div class="course-code"><a href="index.html">CCS514</a></div>
+    <h1>Pose Estimation Annotation</h1>
+    <div class="hero-description">
+      The pose estimation annotation process involves identifying and labeling specific anatomical keypoints—such as joints, limbs, and facial features—on an image to map the structure of a target object, usually a human or animal. Annotators typically select predefined landmarks based on a standard skeletal template (like COCO or MediaPipe) and place them on the corresponding locations within the target, often connecting these points with edges to represent the object's kinematic chain.  This hierarchical process transforms a two-dimensional image into a structured graph, enabling machine learning models to infer not just the presence of a subject, but their precise posture, movement trajectory, and intended action over time.
+    </div>
+  </div>
+</header>
+
+<!--<header>-->
+<!--  <h2>Instance Segmentation Annotation</h2>-->
+<!--  <p>-->
+<!--    Unlike semantic segmentation, instance segmentation treats every object as a distinct entity. Use the unique color codes below to label each individual shape separately, even if they share the same class.-->
+<!--  </p>-->
+<!--</header>-->
+
+<div class="main-container">
+  <aside>
+    <h3>Landmark Annotation</h3>
+    <p><small>Pose estimation requires identifying key anatomical nodes:</small></p>
+    <ul>
+      <li>Head & Neck</li>
+      <li>Shoulders</li>
+      <li>Elbows & Wrists</li>
+      <li>Hips, Knees, Ankles</li>
+    </ul>
+    <p><small><strong>Instructions:</strong> Click to place a joint. Click two joints sequentially to create a skeletal link.</small></p>
+    <button onclick="reset()">Reset Canvas</button>
+  </aside>
+
+  <canvas id="canvas" width="512" height="512"></canvas>
+</div>
+
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let nodes = [];
+  let selectedNode = null;
+
+  function drawBackground() {
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0,0,512,512);
+
+    // Draw subtle silhouette for reference
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(256, 100, 40, 0, Math.PI*2); // Head
+    ctx.moveTo(256, 140); ctx.lineTo(256, 300); // Torso
+    ctx.moveTo(256, 180); ctx.lineTo(180, 220); // Arms
+    ctx.moveTo(256, 180); ctx.lineTo(332, 220);
+    ctx.moveTo(256, 300); ctx.lineTo(200, 450); // Legs
+    ctx.moveTo(256, 300); ctx.lineTo(312, 450);
+    ctx.stroke();
+  }
+
+  canvas.addEventListener('mousedown', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const clickedNode = nodes.find(n => Math.hypot(n.x - x, n.y - y) < 15);
+
+    if (clickedNode) {
+      if (selectedNode && selectedNode !== clickedNode) {
+        ctx.strokeStyle = "#3b82f6";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(selectedNode.x, selectedNode.y);
+        ctx.lineTo(clickedNode.x, clickedNode.y);
+        ctx.stroke();
+        selectedNode = null;
+      } else {
+        selectedNode = clickedNode;
+      }
+    } else {
+      const newNode = {x, y};
+      nodes.push(newNode);
+      ctx.fillStyle = "#ef4444";
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI*2);
+      ctx.fill();
+    }
+  });
+
+  function reset() {
+    nodes = [];
+    selectedNode = null;
+    ctx.clearRect(0, 0, 512, 512);
+    drawBackground();
+  }
+
+  drawBackground();
+</script>
+</body>
+</html>
